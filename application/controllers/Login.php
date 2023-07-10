@@ -39,9 +39,11 @@ class Login extends CI_Controller
 		$mdp=$this->input->post('password');
 		$userBool=$this->user->getForAuth($mail,$mdp);
 		if ($userBool==true) {
-			redirect('welcome_message');
+			// var_dump($this->session->userdata('usersession'));
+			echo $this->session->userdata('usersession');
+			// redirect('welcome_message');
 		}else {
-			redirect('login',$error);
+			$this->load->view('login',$error);
 		}
 	}
 

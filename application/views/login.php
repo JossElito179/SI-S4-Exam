@@ -10,7 +10,12 @@
 <body>
     <div class="center">
         <h1>Log in</h1>
-        <form action="#" method="post">
+        <?php
+        if(isset($message)){
+            echo '<p style=color:red;>'.$message.'</p>';
+        }
+        ?>
+        <form action="<?php echo site_url("Login/authenticate") ?>" method="post">
             <div class="txt_field">
                 <input type="text" name="email" required>
                 <span></span>
