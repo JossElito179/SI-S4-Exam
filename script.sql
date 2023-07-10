@@ -10,7 +10,7 @@ create table utilisateur(
 	idGenre integer,
 	mdp varchar(35),
 	dateDeNaissance date,
-	isAdmin integer,
+	isAdmin boolean,
 	foreign key(idGenre) references genre(idGenre)
 );
 
@@ -24,6 +24,7 @@ create table infoUtilisateur(
 	taille double precision,
 	idObjectif integer,
 	poidsActuelle integer,
+	poids
 	dateDeDebut date,
 	foreign key(idObjectif) references objectif(idObjectif)
 );

@@ -31,6 +31,10 @@ class Login extends CI_Controller
     // 
   }
 
+  public function versLoginAdmin(){
+	 $this->load->view('loginAdmin');
+  } 
+
 	public function authenticate()
 	{
 		$error['message']='Something went wrong with your email or password';
@@ -39,14 +43,30 @@ class Login extends CI_Controller
 		$mdp=$this->input->post('password');
 		$userBool=$this->user->getForAuth($mail,$mdp);
 		if ($userBool==true) {
-			// var_dump($this->session->userdata('usersession'));
-			echo $this->session->userdata('usersession');
-			// redirect('welcome_message');
+			redirect('welcome_message');
 		}else {
 			$this->load->view('login',$error);
 		}
 	}
 
+	public function authenticateAdmin()
+	{
+		$error['message']='Something went wrong with your email or password';
+		$this->load->model('User_model','user',true);
+		$mail=$this->input->post('email');
+		$mdp=$this->input->post('password');
+		$isAdmin=$this->user->getForAuthAdmin($mail,$mdp);
+		if ($isAdmin==true) {
+			redirect('welcome_message');
+		}else {
+			$this->load->view('loginAdmin',$error);
+		}
+	}
+
+	public function insertUser()
+	{
+
+	}
 	
 }
 
