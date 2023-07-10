@@ -52,17 +52,17 @@ create table categorie(
 	nomCategorie varchar(35)
 );
 
-create table sakafo(
-	idSakafo serial  primary key, 
-	nomSakafo varchar(35)
+create table Aliment(
+	idAliment serial  primary key, 
+	nomAliment varchar(35)
 );
 
-create table categorieSakafo(
-	idCategorieSakafo serial primary key,
+create table categorieAliment(
+	idCategorieAliment serial primary key,
 	idCategorie integer,
-	idSakafo integer,
+	idAliment integer,
 	foreign key(idCategorie) references categorie(idCategorie),
-	foreign key(idSakafo) references sakafo(idSakafo)
+	foreign key(idAliment) references Aliment(idAliment)
 );
 
 create table regime(
@@ -75,8 +75,8 @@ create table journee(
 	nomJournee varchar(35)
 );
 
-create table regimeSakafo(
-	idRegimeSakafo serial primary key,
+create table regimeAliment(
+	idRegimeAliment serial primary key,
 	idRegime integer,
 	idCategorie integer,
 	pourcentage double precision,
@@ -107,7 +107,7 @@ create table objectifRegimePrix(
 	idObjectifRegime serila
 )
 
-create table type(
+create table typeSport(
 	idType serial primary key,
 	nomType varchar(35)
 );
@@ -116,8 +116,8 @@ create table excercice(
 	idExercice serial primary key,
 	nomExercice varchar(35),
 	partieTravailler varchar(35),
-	idType integer,
-	foreign key(idType) references type(idType)
+	idTypeSport integer,
+	foreign key(idType) references typeSport(idType)
 );
 
 create table activiteSportive(
@@ -152,3 +152,7 @@ create table regimePersonne(
 	foreign key(idRegime) references regime(idRegime),
 	foreign key(idUtilisateur) references utilisateur(idUtilisateur)
 );
+
+create view v_regime as select regimeAliment.idRegime , regimeAliment.jour , categorie.nom , regimeAliment.pourcentage , journee.nomJournee 
+			from categorie join regimeAliment on categorie.idCategorie=regimeAliment.idCategorie join journee on 
+			journee.idJournee=regimeAliment.idJournee;
