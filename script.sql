@@ -68,13 +68,20 @@ create table regime(
 	nomRegime varchar(35)	
 );
 
+create table journee(
+	idJournee serial primary key,
+	nomJournee varchar(35)
+);
+
 create table regimeSakafo(
 	idRegimeCategorie serial primary key,
 	idRegime integer,
 	idCategorie integer,
 	pourcentage double precision,
+	idJournee integer, 
 	foreign key(idRegime) references regime(idRegime),
-	foreign key(idCategorie) references categorie(idCategorie)
+	foreign key(idCategorie) references categorie(idCategorie),
+	foreign key(idJournee) references journee(idJournee)
 );
 
 create table objectifRegime(
