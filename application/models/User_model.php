@@ -72,6 +72,16 @@ class User_model extends CI_Model {
 	}
   // ------------------------------------------------------------------------
 
+	public function Insert($nom,$email,$idGenre,$mdp,$dateNaissance)
+	{
+		$this->db->insert('utilisateur',[
+		'nom'=>$nom,
+		'email'=>$email,
+		'idGenre'=>$idGenre,
+		'mdp'=>$mdp,
+		'dateDeNaissance'=>$dateNaissance,
+		'isAdmin'=>'false']);
+	}
 }
 
 /* End of file User_model.php */
