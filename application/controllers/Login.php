@@ -30,6 +30,11 @@ class Login extends CI_Controller
   {
     // 
   }
+
+  public function versLoginAdmin(){
+	 $this->load->view('loginAdmin');
+  } 
+
 	public function authenticate()
 	{
 		$error['message']='Something went wrong with your email or password';
