@@ -139,5 +139,7 @@ create table regimePersonne(
 	idRegime integer,
 	idUtilisateur integer,
 	dateDebut date,
-	dateFin date
+	dateFin date,
+	foreign key(idRegime) references regime(idRegime),
+	foreign key(idUtilisateur) references utilisateur(idUtilisateur)
 );
