@@ -21,12 +21,14 @@ create table objectif(
 
 create table infoUtilisateur(
 	idInfoUtilisateur serial primary key,
+	idutilisateur integer,
 	taille double precision,
 	idObjectif integer,
 	poidsActuelle integer,
-	poids
+	poidObjectif integer,
 	dateDeDebut date,
-	foreign key(idObjectif) references objectif(idObjectif)
+	foreign key(idObjectif) references objectif(idObjectif),
+	foreign key(idutilisateur) references utilisateur(id)
 );
 
 create table tranchePoids(
@@ -104,7 +106,7 @@ create table objectifRegime(
 ); 
 
 create table objectifRegimePrix(
-	idObjectifRegime serila
+	idObjectifRegime serial primary key
 )
 
 create table type(
@@ -136,11 +138,10 @@ create table objectifSportive(
 	idTranchetaille integer,
 	idTrancheAge integer,
 	idObjectif integer,
-	foreign key(idRegime) references regime(idRegime),
 	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
 	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
 	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
-	foreign key(idActiviteSportive) references activeSportive(idActiveSportive)
+	foreign key(idActiviteSportive) references activiteSportive(idActiviteSportive)
 ); 
 
 create table regimePersonne(
@@ -150,5 +151,5 @@ create table regimePersonne(
 	dateDebut date,
 	dateFin date,
 	foreign key(idRegime) references regime(idRegime),
-	foreign key(idUtilisateur) references utilisateur(idUtilisateur)
+	foreign key(idUtilisateur) references utilisateur(id)
 );

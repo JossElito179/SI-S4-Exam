@@ -74,13 +74,14 @@ class User_model extends CI_Model {
 
 	public function Insert($nom,$email,$idGenre,$mdp,$dateNaissance)
 	{
-		$this->db->insert('utilisateur',[
-		'nom'=>$nom,
-		'email'=>$email,
-		'idGenre'=>$idGenre,
-		'mdp'=>$mdp,
-		'dateDeNaissance'=>$dateNaissance,
-		'isAdmin'=>'false']);
+    $tableau = array();
+    $tableau['nom'] = $nom;
+    $tableau['email']=$email;
+    $tableau['idgenre']=$idGenre;
+    $tableau['mdp'] = $mdp;
+    $tableau['dateDeNaissance']=$dateNaissance;
+    $tableau['isAdmin']=false;
+		$this->db->insert('utilisateur', $tableau);
 	}
 }
 
