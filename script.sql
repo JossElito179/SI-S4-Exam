@@ -23,6 +23,7 @@ create table infoUtilisateur(
 	idInfoUtilisateur serial primary key,
 	taille double precision,
 	idObjectif integer,
+	poidsActuelle integer,
 	dateDeDebut date,
 	foreign key(idObjectif) references objectif(idObjectif)
 );
@@ -74,15 +75,18 @@ create table journee(
 );
 
 create table regimeSakafo(
-	idRegimeCategorie serial primary key,
+	idRegimeSakafo serial primary key,
 	idRegime integer,
 	idCategorie integer,
 	pourcentage double precision,
-	idJournee integer, 
+	idJournee integer,
+	jour integer,
 	foreign key(idRegime) references regime(idRegime),
 	foreign key(idCategorie) references categorie(idCategorie),
 	foreign key(idJournee) references journee(idJournee)
 );
+
+--jour delimite le dernier jour du regime
 
 create table objectifRegime(
 	idObjectifRegime serial primary key,
@@ -97,6 +101,10 @@ create table objectifRegime(
 	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
 	foreign key(idObjectif) references objectif(idObjectif)
 ); 
+
+create table objectifRegimePrix(
+	idObjectifRegime serila
+)
 
 create table type(
 	idType serial primary key,
