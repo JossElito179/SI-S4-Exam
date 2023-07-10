@@ -33,8 +33,8 @@ a:hover{
 }
 </style>
 
-<center>
 
+<center>
 <div class="center" id="objectif">
     <div class="txt_field">
         <img src="<?php echo base_url("assets/images/images.jpg"); ?>">
