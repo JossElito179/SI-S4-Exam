@@ -52,6 +52,24 @@ class User_model extends CI_Model {
     }
     return false;
 	}
+
+	public function getForAuthAdmin($email,$password)
+	{
+    $tableau = array();
+    $tableau['email']=$email;
+    $tableau['mdp']=$password;
+
+		$this->db->where($tableau);
+    
+		$user=$this->db->get('utilisateur');
+		$data = $user->result();
+
+    if(count($data) == 1){
+      $this->session->set_userdata('usersession',$data[0]->id);
+      return $data[0]->isAdmin;
+    }
+    return false;
+	}
   // ------------------------------------------------------------------------
 
 }
