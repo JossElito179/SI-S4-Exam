@@ -122,7 +122,7 @@ create table activiteSportive(
 
 create table objectifSportive(
 	idObjectifSportive serial primary key,
-	idRegime integer,
+	idActiviteSportive integer,
 	idTranchePoids integer,
 	idTranchetaille integer,
 	idTrancheAge integer,
@@ -131,5 +131,13 @@ create table objectifSportive(
 	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
 	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
 	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
-	foreign key(idObjectif) references objectif(idObjectif)
+	foreign key(idActiviteSportive) references activeSportive(idActiveSportive)
 ); 
+
+create table regimePersonne(
+	idRegimePersonne serial primary key,
+	idRegime integer,
+	idUtilisateur integer,
+	dateDebut date,
+	dateFin date
+);
