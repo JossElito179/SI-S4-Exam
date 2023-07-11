@@ -20,10 +20,6 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-<<<<<<< Updated upstream
 		$this->load->view('login');
-=======
-		$this->load->view('Login');
->>>>>>> Stashed changes
 	}
 }

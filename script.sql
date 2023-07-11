@@ -21,12 +21,14 @@ create table objectif(
 
 create table infoUtilisateur(
 	idInfoUtilisateur serial primary key,
+	idutilisateur integer,
 	taille double precision,
 	idObjectif integer,
 	poidsActuelle integer,
-	poids
+	poidObjectif integer,
 	dateDeDebut date,
-	foreign key(idObjectif) references objectif(idObjectif)
+	foreign key(idObjectif) references objectif(idObjectif),
+	foreign key(idutilisateur) references utilisateur(id)
 );
 
 create table tranchePoids(
@@ -41,28 +43,23 @@ create table trancheTaille(
 	max double precision
 );
 
-create table trancheAge(
-	idTrancheAge serial primary key,
-	min double precision,
-	max double precision
-);
-
 create table categorie(
 	idCategorie serial primary key,
 	nomCategorie varchar(35)
 );
 
-create table sakafo(
-	idSakafo serial  primary key, 
-	nomSakafo varchar(35)
+create table Aliment(
+	idAliment serial  primary key, 
+	nomAliment varchar(35)
 );
 
-create table categorieSakafo(
-	idCategorieSakafo serial primary key,
+create table categorieAliment(
+	idCategorieAliment serial primary key,
 	idCategorie integer,
-	idSakafo integer,
+	idAliment integer,
+	prixKilo decimal(10,2),
 	foreign key(idCategorie) references categorie(idCategorie),
-	foreign key(idSakafo) references sakafo(idSakafo)
+	foreign key(idAliment) references Aliment(idAliment)
 );
 
 create table regime(
@@ -70,33 +67,33 @@ create table regime(
 	nomRegime varchar(35)	
 );
 
+create table poidsParPersonne(
+	idPoidsParPersonne serial primary key,
+	PoidsEnGramme double precision
+);
+
 create table journee(
 	idJournee serial primary key,
 	nomJournee varchar(35)
 );
 
-create table regimeSakafo(
-	idRegimeSakafo serial primary key,
+create table regimeAliment(
+	idRegimeAliment serial primary key,
 	idRegime integer,
-<<<<<<< Updated upstream
-	idCategorie integer,
-	pourcentage double precision,
-	idJournee integer,
-	jour integer,
-	foreign key(idRegime) references regime(idRegime),
-	foreign key(idCategorie) references categorie(idCategorie),
-	foreign key(idJournee) references journee(idJournee)
-=======
-	jour integer,
 	pProteine double precision,
 	pSucre double precision,
 	pLegume double precision,
 	pFruit double precision,
 	pAccompagnement double precision,
-	foreign key(idRegime) references regime(idRegime)
->>>>>>> Stashed changes
+	jour integer,
+	foreign key(idRegime) references regime(idRegime),
 );
 
+create table tranchePoidsActuel(
+	idTranchePoidsActuel serial primary key,
+	min double precision,
+	max double precision
+);
 --jour delimite le dernier jour du regime
 
 create table objectifRegime(
@@ -104,39 +101,46 @@ create table objectifRegime(
 	idRegime integer,
 	idTranchePoids integer,
 	idTranchetaille integer,
-	idTrancheAge integer,
+	idTranchePoidsActuel integer,
 	idObjectif integer,
 	foreign key(idRegime) references regime(idRegime),
 	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
 	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
-	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
+	foreign key(idTranchePoidsActuel) references tranchePoidsActuel(idTranchePoidsActuel),
 	foreign key(idObjectif) references objectif(idObjectif)
 ); 
 
-create table objectifRegimePrix(
-	idObjectifRegime serila
-)
 
-create table type(
+
+create table typeSport(
 	idType serial primary key,
 	nomType varchar(35)
 );
 
-*
+insert into typeSport values (default,'individuel'),
+							 (default,'collectif');
+
 create table excercice(
 	idExercice serial primary key,
 	nomExercice varchar(35),
 	partieTravailler varchar(35),
 	idType integer,
-	foreign key(idType) references type(idType)
+	foreign key(idType) references typeSport(idType)
+);
+
+create table activite(
+	id serial primary key,
+	nomactivite varchar(35)
 );
 
 create table activiteSportive(
 	idActiviteSportive serial primary key,
+	Activite integer,
 	idExercice integer,
 	repetition double precision,
 	frequence double precision,
-	foreign key(idExercice) references excercice(idExercice)
+	foreign key(idExercice) references excercice(idExercice),
+	foreign key(Activite) references activite(id)
 );
 
 
@@ -145,13 +149,13 @@ create table objectifSportive(
 	idActiviteSportive integer,
 	idTranchePoids integer,
 	idTranchetaille integer,
-	idTrancheAge integer,
+	idTranchePoidsActuel integer,
 	idObjectif integer,
-	foreign key(idRegime) references regime(idRegime),
 	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
 	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
 	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
-	foreign key(idActiviteSportive) references activeSportive(idActiveSportive)
+	foreign key(idTranchePoidsActuel) references tranchePoidsActuel(idTranchePoidsActuel),
+	foreign key(idActiviteSportive) references activite(id)
 ); 
 
 create table regimePersonne(
@@ -161,19 +165,42 @@ create table regimePersonne(
 	dateDebut date,
 	dateFin date,
 	foreign key(idRegime) references regime(idRegime),
-	foreign key(idUtilisateur) references utilisateur(idUtilisateur)
+	foreign key(idUtilisateur) references utilisateur(id)
 );
-<<<<<<< Updated upstream
-=======
-
-create view v_regime as select regimeAliment.idRegime , regimeAliment.jour , categorie.nomCategorie , regimeAliment.pourcentage , journee.nomJournee 
-			from categorie join regimeAliment on categorie.idCategorie=regimeAliment.idCategorie join journee on 
-			journee.idJournee=regimeAliment.idJournee;
 
 create view v_categorieAliment as select idcategoriealiment,idcategorie,categorieAliment.idaliment,prixkilo,aliment.nomAliment
 from categorieAliment 
 join aliment on categorieAliment.idaliment=aliment.idaliment;
 
+create table objectifSportive(
+	idObjectifSportive serial primary key,
+	idActiviteSportive integer,
+	idTranchePoids integer,
+	idTranchetaille integer,
+	idTranchePoidsActuel integer,
+	idObjectif integer,
+	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
+	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
+	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
+	foreign key(idTranchePoidsActuel) references tranchePoidsActuel(idTranchePoidsActuel),
+	foreign key(idActiviteSportive) references activite(id)
+); 
+
+create table activiteSportive(
+	idActiviteSportive serial primary key,
+	Activite integer,
+	idExercice integer,
+	repetition double precision,
+	frequence double precision,
+	foreign key(idExercice) references excercice(idExercice),
+	foreign key(Activite) references activite(id)
+);
+
+
+create view v_sport as select activite.nomactivite , objectifSportive.idActiviteSportive , exercice.nomExercice , exercice.partieTravailler 
+							   , activiteSportive.repetition , activiteSportive.frequence from objectifSportive join activite
+							   on objectifSportive.idActiviteSportive=activite.id join activiteSportive 
+							   on activiteSportive.Activite=activite.id join exercice on activiteSportive.idExercice=exercice.idExercice;
 
 insert into utilisateur values(default, 'henintsoa', 'henintsoa@gmail.com', 1, 'henintsoa', current_date);
 
@@ -270,6 +297,7 @@ insert into categorieAliment values(default, 1, 7);
 insert into categorieAliment values(default, 1, 8);
 insert into categorieAliment values(default, 1, 9);
 insert into categorieAliment values(default, 1, 10);
+
 -- Legume
 insert into categorieAliment values(default, 2, 11);
 insert into categorieAliment values(default, 2, 12);
@@ -323,8 +351,6 @@ insert into regime values(default, 'Regime cetogene');
 insert into regime values(default, 'Regime Atkins');
 insert into regime values(default, 'Regime de jeuene intermittent');
 -- Augmentation de poids
-insert into regime values(default, 'Regime');
-
 
 insert into tranchePoids values (default,1,5),
 						(default,6,10),
@@ -337,7 +363,6 @@ insert into tranchePoidsActuel values (default,0,40),
 insert into trancheTaille values (default,80,120),
 						 (default,121,170),
 						 (default,171,220);
-
 
 insert into regimeAliment values(default,1,1,40,20,10,20,10),
 								(default,1,2,30,30,10,20,10),
@@ -371,24 +396,117 @@ insert into tranchePoidsActuel values (default,0,40),
 insert into objectifRegime values (default , 1 , 1 , 1, 1 , 2 ),
 								  (default , 1 , 1 , 2, 1 , 2 ),
 								  (default , 1 , 1 , 3, 1 , 2 ),
-								  (default , 2 , 2 , 1, 2 , 2 ),
-								  (default , 2 , 2 , 2, 2 , 2 ),
-								  (default , 2 , 2 , 3, 2 , 2 ),
-								  (default , 4 , 3 , 1, 3 , 2 ),
-								  (default , 4 , 3 , 2, 3 , 2 ),
-								  (default , 4 , 3 , 3, 3 , 2 ),
+								  (default , 2 , 1 , 1, 2 , 2 ),
+								  (default , 2 , 1 , 2, 2 , 2 ),
+								  (default , 2 , 1 , 3, 2 , 2 ),
+								  (default , 4 , 1 , 1, 3 , 2 ),
+								  (default , 4 , 1 , 2, 3 , 2 ),
+								  (default , 4 , 1 , 3, 3 , 2 ),
 
-								  (default , 3 , 1 , 1, 1 , 1 ),
-								  (default , 3 , 1 , 2, 1 , 1 ),
-								  (default , 3 , 1 , 3, 1 , 1 ),
-								  (default , 7 , 2 , 1, 2 , 1 ),
-								  (default , 7 , 2 , 2, 2 , 1 ),
-								  (default , 7 , 2 , 3, 2 , 1 ),
+								  (default , 3 , 2 , 1, 1 , 1 ),
+								  (default , 3 , 2 , 2, 1 , 1 ),
+								  (default , 3 , 2 , 3, 1 , 1 ),
+								  (default , 5 , 2 , 1, 2 , 1 ),
+								  (default , 5 , 2 , 2, 2 , 1 ),
+								  (default , 5 , 2 , 3, 2 , 1 ),
+								  (default , 4 , 2 , 1, 3 , 1 ),
+								  (default , 4 , 2 , 2, 3 , 1 ),
+								  (default , 4 , 2 , 3, 3 , 1 ),
+
+								  (default , 3 , 3 , 1, 1 , 1 ),
+								  (default , 3 , 3 , 2, 1 , 1 ),
+								  (default , 3 , 3 , 3, 1 , 1 ),
+								  (default , 5 , 3 , 1, 2 , 1 ),
+								  (default , 5 , 3 , 2, 2 , 1 ),
+								  (default , 5 , 3 , 3, 2 , 1 ),
 								  (default , 4 , 3 , 1, 3 , 1 ),
 								  (default , 4 , 3 , 2, 3 , 1 ),
 								  (default , 4 , 3 , 3, 3 , 1 );
 
+INSERT INTO exercice (nomExercice, partieTravailler, idType)
+VALUES
+  ('Pompes', 'Bras, épaules et poitrine', 1),
+  ('Squats', 'Jambes et fessiers', 1),
+  ('Fentes', 'Jambes et fessiers', 1),
+  ('Planche', 'Abdominaux, dos et épaules', 1),
+  ('Burpees', 'Cardiovasculaire', 1),
+  ('Crunchs', 'Abdominaux', 1),
+  ('Mountain climbers', 'Abdominaux et cardio', 1),
+  ('Jumping jacks', 'Cardiovasculaire', 1),
+  ('Extensions de triceps', 'Triceps', 1),
+  ('Russian twists', 'Abdominaux et obliques', 1),
+  ('Lunges', 'Jambes et fessiers', 1),
+  ('Superman', 'Dos', 1),
+  ('Mountain climbers', 'Abdominaux et cardio', 1),
+  ('Gainage latéral', 'Abdominaux et obliques', 1),
+  ('Extensions de mollets', 'Mollets', 1),
+  ('Fentes latérales', 'Jambes et fessiers', 1),
+  ('Ponts de hanche', 'Fessiers et ischio-jambiers', 1),
+  ('Élévations latérales', 'Épaules', 1),
+  ('Extensions lombaires', 'Bas du dos', 1),
+  ('Sauts à la corde', 'Cardiovasculaire', 1);
+
+INSERT INTO exercice (nomExercice, partieTravailler, idType)
+VALUES
+  ('Football', 'Jambes, cardiovasculaire', 2),
+  ('Basketball', 'Jambes, bras, cardiovasculaire', 2),
+  ('Volleyball', 'Bras, jambes, cardiovasculaire', 2),
+  ('Handball', 'Bras, jambes, cardiovasculaire', 2),
+  ('Rugby', 'Bras, jambes, cardiovasculaire', 2),
+  ('Tennis', 'Bras, jambes, cardiovasculaire', 2),
+  ('Badminton', 'Bras, jambes, cardiovasculaire', 2);
+
+insert into activite values(default,'Activite de Gain musculaire'),
+					 (default,'Activite perte de graice'),
+					 (default,'Activite perte ittermitent'),
+					 (default,'Activite de gain poids');
 
 
+insert into activiteSportive values (default,1,21,'un apres midi','2 fois dans une semaine',30),
+									(default,1,22,'un matin au reveil','1 fois dans une semaine',30),
+									(default,1,1,'3 seance x 12','2 fois dans une semaine',10),
+									(default,1,3,'3 seance x 10 ','3 fois dans une semaine',30),
+									(default,1,3,'3 seance x 30 ','4 fois dans une semaine',30),
+									
+									(default,2,26,'le matin','2 fois dans une semaine',20),
+									(default,2,12,'2 seance x 5','3 fois dans une semaine',30),
+									(default,2,13,'5 seance x 2','2 fois dans une semaine',10),
+									
+									(default,3,14,'4 seance x 3','2 fois dans une semaine',30),
+									(default,3,22,'un apres midi','2 fois dans une semaine',90),
+									
+									(default,4,23,'entre le repas','2 fois dans une semaine',45),
+									(default,4,8,'4 seances x 20','2 fois dans une semaine',15),
+									(default,4,1,'un apres midi','2 fois dans une semaine',30);
 
->>>>>>> Stashed changes
+insert into objectifSportive values(default , 1 , 1 , 1, 1 , 1 ),
+								  (default , 1 , 1 , 2, 1 , 1 ),
+								  (default , 1 , 1 , 3, 1 , 1 ),
+								  (default , 4 , 1 , 1, 2 , 1 ),
+								  (default , 1 , 1 , 2, 2 , 1 ),
+								  (default , 1 , 1 , 3, 2 , 1 ),
+								  (default , 4 , 1 , 1, 3 , 1 ),
+								  (default , 1 , 1 , 2, 3 , 1 ),
+								  (default , 4 , 1 , 3, 3 , 1 ),
+
+								  (default , 3 , 2 , 1, 1 , 1 ),
+								  (default , 3 , 2 , 2, 1 , 1 ),
+								  (default , 3 , 2 , 3, 1 , 1 ),
+								  (default , 2 , 2 , 1, 2 , 1 ),
+								  (default , 2 , 2 , 2, 2 , 1 ),
+								  (default , 2 , 2 , 3, 2 , 1 ),
+								  (default , 3 , 2 , 1, 3 , 1 ),
+								  (default , 2 , 2 , 2, 3 , 1 ),
+								  (default , 2 , 2 , 3, 3 , 1 ),
+
+								  (default , 3 , 3 , 1, 1 , 1 ),
+								  (default , 3 , 3 , 2, 1 , 1 ),
+								  (default , 3 , 3 , 3, 1 , 1 ),
+								  (default , 2 , 3 , 1, 2 , 1 ),
+								  (default , 2 , 3 , 2, 2 , 1 ),
+								  (default , 2 , 3 , 3, 2 , 1 ),
+								  (default , 3 , 3 , 1, 3 , 1 ),
+								  (default , 2 , 3 , 2, 3 , 1 ),
+								  (default , 2 , 3 , 3, 3 , 1 );
+
+

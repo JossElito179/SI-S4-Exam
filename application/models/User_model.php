@@ -72,8 +72,6 @@ class User_model extends CI_Model {
 	}
   // ------------------------------------------------------------------------
 
-<<<<<<< Updated upstream
-=======
 	public function Insert($nom,$email,$idGenre,$mdp,$dateNaissance)
 	{
     $tableau = array();
@@ -86,6 +84,7 @@ class User_model extends CI_Model {
 		$this->db->insert('utilisateur', $tableau);
 	}
 
+
   public function getInfoUtilisateur($idUtilisateur){
     $sql="SELECT * FROM infoUtilisateur WHERE idUtilisateur=%d ORDER BY idinfoutilisateur DESC LIMIT 1";
     $sql=sprintf($sql,$idUtilisateur);
@@ -96,7 +95,6 @@ class User_model extends CI_Model {
     }
     return $resultat;
   }
->>>>>>> Stashed changes
 }
 
 /* End of file User_model.php */

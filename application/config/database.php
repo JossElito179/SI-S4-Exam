@@ -78,6 +78,7 @@ $db['default'] = array(
 	'hostname' => 'localhost',
 	'username' => 'postgres',
 	'password' => '0000',
+	'password' => 'postgres',
 	'database' => 'regime',
 	'dbdriver' => 'postgre',
 	'dbprefix' => '',
