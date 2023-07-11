@@ -170,6 +170,36 @@ create table regimePersonne(
 	foreign key(idUtilisateur) references utilisateur(id)
 );
 
+create table objectifSportive(
+	idObjectifSportive serial primary key,
+	idActiviteSportive integer,
+	idTranchePoids integer,
+	idTranchetaille integer,
+	idTranchePoidsActuel integer,
+	idObjectif integer,
+	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
+	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
+	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
+	foreign key(idTranchePoidsActuel) references tranchePoidsActuel(idTranchePoidsActuel),
+	foreign key(idActiviteSportive) references activite(id)
+); 
+
+create table activiteSportive(
+	idActiviteSportive serial primary key,
+	Activite integer,
+	idExercice integer,
+	repetition double precision,
+	frequence double precision,
+	foreign key(idExercice) references excercice(idExercice),
+	foreign key(Activite) references activite(id)
+);
+
+
+create view v_sport as select activite.nomactivite , objectifSportive.idActiviteSportive , exercice.nomExercice , exercice.partieTravailler 
+							   , activiteSportive.repetition , activiteSportive.frequence from objectifSportive join activite
+							   on objectifSportive.idActiviteSportive=activite.id join activiteSportive 
+							   on activiteSportive.Activite=activite.id join exercice on activiteSportive.idExercice=exercice.idExercice;
+
 insert into utilisateur values(default, 'henintsoa', 'henintsoa@gmail.com', 1, 'henintsoa', current_date);
 
 -- Insertion de Genre
@@ -320,9 +350,6 @@ insert into regime values(default, 'Regime de jeuene intermittent');
 -- Augmentation de poids
 insert into regime values(default, 'Regime')
 
-insert into journee values(default,'Matin'),
-						  (default,'Midi');
-
 insert into tranchePoids values (default,1,5),
 						(default,6,10),
 						(default,6,20);
@@ -368,19 +395,29 @@ insert into tranchePoidsActuel values (default,0,40),
 insert into objectifRegime values (default , 1 , 1 , 1, 1 , 2 ),
 								  (default , 1 , 1 , 2, 1 , 2 ),
 								  (default , 1 , 1 , 3, 1 , 2 ),
-								  (default , 2 , 2 , 1, 2 , 2 ),
-								  (default , 2 , 2 , 2, 2 , 2 ),
-								  (default , 2 , 2 , 3, 2 , 2 ),
-								  (default , 4 , 3 , 1, 3 , 2 ),
-								  (default , 4 , 3 , 2, 3 , 2 ),
-								  (default , 4 , 3 , 3, 3 , 2 ),
+								  (default , 2 , 1 , 1, 2 , 2 ),
+								  (default , 2 , 1 , 2, 2 , 2 ),
+								  (default , 2 , 1 , 3, 2 , 2 ),
+								  (default , 4 , 1 , 1, 3 , 2 ),
+								  (default , 4 , 1 , 2, 3 , 2 ),
+								  (default , 4 , 1 , 3, 3 , 2 ),
 
-								  (default , 3 , 1 , 1, 1 , 1 ),
-								  (default , 3 , 1 , 2, 1 , 1 ),
-								  (default , 3 , 1 , 3, 1 , 1 ),
+								  (default , 3 , 2 , 1, 1 , 1 ),
+								  (default , 3 , 2 , 2, 1 , 1 ),
+								  (default , 3 , 2 , 3, 1 , 1 ),
 								  (default , 5 , 2 , 1, 2 , 1 ),
 								  (default , 5 , 2 , 2, 2 , 1 ),
 								  (default , 5 , 2 , 3, 2 , 1 ),
+								  (default , 4 , 2 , 1, 3 , 1 ),
+								  (default , 4 , 2 , 2, 3 , 1 ),
+								  (default , 4 , 2 , 3, 3 , 1 ),
+
+								  (default , 3 , 3 , 1, 1 , 1 ),
+								  (default , 3 , 3 , 2, 1 , 1 ),
+								  (default , 3 , 3 , 3, 1 , 1 ),
+								  (default , 5 , 3 , 1, 2 , 1 ),
+								  (default , 5 , 3 , 2, 2 , 1 ),
+								  (default , 5 , 3 , 3, 2 , 1 ),
 								  (default , 4 , 3 , 1, 3 , 1 ),
 								  (default , 4 , 3 , 2, 3 , 1 ),
 								  (default , 4 , 3 , 3, 3 , 1 );
@@ -441,22 +478,34 @@ insert into activiteSportive values (default,1,21,'un apres midi','2 fois dans u
 									(default,4,8,'4 seances x 20','2 fois dans une semaine',15),
 									(default,4,1,'un apres midi','2 fois dans une semaine',30);
 
-insert into objectifSportive values (default , 1 , 1 , 1, 1 , 2 ),
-								  (default , 1 , 1 , 2, 1 , 2 ),
-								  (default , 1 , 1 , 3, 1 , 2 ),
-								  (default , 4 , 2 , 1, 2 , 2 ),
-								  (default , 1 , 2 , 2, 2 , 2 ),
-								  (default , 1 , 2 , 3, 2 , 2 ),
-								  (default , 4 , 3 , 1, 3 , 2 ),
-								  (default , 1 , 3 , 2, 3 , 2 ),
-								  (default , 4 , 3 , 3, 3 , 2 ),
+insert into objectifSportive values(default , 1 , 1 , 1, 1 , 1 ),
+								  (default , 1 , 1 , 2, 1 , 1 ),
+								  (default , 1 , 1 , 3, 1 , 1 ),
+								  (default , 4 , 1 , 1, 2 , 1 ),
+								  (default , 1 , 1 , 2, 2 , 1 ),
+								  (default , 1 , 1 , 3, 2 , 1 ),
+								  (default , 4 , 1 , 1, 3 , 1 ),
+								  (default , 1 , 1 , 2, 3 , 1 ),
+								  (default , 4 , 1 , 3, 3 , 1 ),
 
-								  (default , 3 , 1 , 1, 1 , 1 ),
-								  (default , 3 , 1 , 2, 1 , 1 ),
-								  (default , 3 , 1 , 3, 1 , 1 ),
+								  (default , 3 , 2 , 1, 1 , 1 ),
+								  (default , 3 , 2 , 2, 1 , 1 ),
+								  (default , 3 , 2 , 3, 1 , 1 ),
 								  (default , 2 , 2 , 1, 2 , 1 ),
 								  (default , 2 , 2 , 2, 2 , 1 ),
 								  (default , 2 , 2 , 3, 2 , 1 ),
+								  (default , 3 , 2 , 1, 3 , 1 ),
+								  (default , 2 , 2 , 2, 3 , 1 ),
+								  (default , 2 , 2 , 3, 3 , 1 ),
+
+								  (default , 3 , 3 , 1, 1 , 1 ),
+								  (default , 3 , 3 , 2, 1 , 1 ),
+								  (default , 3 , 3 , 3, 1 , 1 ),
+								  (default , 2 , 3 , 1, 2 , 1 ),
+								  (default , 2 , 3 , 2, 2 , 1 ),
+								  (default , 2 , 3 , 3, 2 , 1 ),
 								  (default , 3 , 3 , 1, 3 , 1 ),
 								  (default , 2 , 3 , 2, 3 , 1 ),
 								  (default , 2 , 3 , 3, 3 , 1 );
+
+

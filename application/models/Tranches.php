@@ -27,8 +27,8 @@ class Tranches extends CI_Model {
 
   // ------------------------------------------------------------------------
   // Avoir Tranches Taille et Poids 
-  public function avoirLaTranche($labelle, $poids){
-    $condition = $poids." between min and max";
+  public function avoirLaTranche($labelle, $nombre){
+    $condition = $nombre." between min and max";
 
     $resultat = $this->Generalisation->SelectSpecifiedFromTableSansEgale($labelle, "*", $condition);
 
@@ -37,8 +37,6 @@ class Tranches extends CI_Model {
     }
     return false;
   }
-
-
   // ------------------------------------------------------------------------
 
 
