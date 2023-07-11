@@ -21,12 +21,14 @@ create table objectif(
 
 create table infoUtilisateur(
 	idInfoUtilisateur serial primary key,
+	idutilisateur integer,
 	taille double precision,
 	idObjectif integer,
 	poidsActuelle integer,
-	poids
+	poidObjectif integer,
 	dateDeDebut date,
-	foreign key(idObjectif) references objectif(idObjectif)
+	foreign key(idObjectif) references objectif(idObjectif),
+	foreign key(idutilisateur) references utilisateur(id)
 );
 
 create table tranchePoids(
@@ -96,6 +98,7 @@ create table objectifRegime(
 ); 
 
 
+
 create table typeSport(
 	idType serial primary key,
 	nomType varchar(35)
@@ -126,7 +129,6 @@ create table objectifSportive(
 	idTranchetaille integer,
 	idTrancheAge integer,
 	idObjectif integer,
-	foreign key(idRegime) references regime(idRegime),
 	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
 	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
 	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
