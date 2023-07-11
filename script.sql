@@ -171,21 +171,34 @@ create view v_categorieAliment as select idcategoriealiment,idcategorie,categori
 from categorieAliment 
 join aliment on categorieAliment.idaliment=aliment.idaliment;
 
+
+create table objectifSportive(
+	idObjectifSportive serial primary key,
+	idActiviteSportive integer,
+	idTranchePoids integer,
+	idTranchetaille integer,
+	idTranchePoidsActuel integer,
+	idObjectif integer,
+	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
+	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
+	foreign key(idTranchePoidsActuel) references tranchePoidsActuel(idTranchePoidsActuel),
+	foreign key(idActiviteSportive) references activite(id)
+); 
+
+create table activiteSportive(
+	idActiviteSportive serial primary key,
+	Activite integer,
+	idExercice integer,
+	repetition double precision,
+	frequence double precision,
+	foreign key(idExercice) references excercice(idExercice),
+	foreign key(Activite) references activite(id)
+);
+
 create view v_sport as select activite.nomactivite , objectifSportive.idActiviteSportive , Exercice.nomExercice , Exercice.partieTravailler 
 							   , activiteSportive.repetition , activiteSportive.frequence from objectifSportive join activite
 							   on objectifSportive.idActiviteSportive=activite.id join activiteSportive 
 							   on activiteSportive.Activite=activite.id join Exercice on activiteSportive.idExercice=Exercice.idExercice;
-create table utilisateur(
-	id serial primary key,
-	nom varchar(35),
-	email varchar(35),
-	idGenre integer,
-	mdp varchar(35),
-	dateDeNaissance date,
-	isAdmin boolean,
-	foreign key(idGenre) references genre(idGenre)
-);
-
 
 <<<<<<< HEAD
 
