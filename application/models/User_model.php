@@ -72,6 +72,31 @@ class User_model extends CI_Model {
 	}
   // ------------------------------------------------------------------------
 
+<<<<<<< Updated upstream
+=======
+	public function Insert($nom,$email,$idGenre,$mdp,$dateNaissance)
+	{
+    $tableau = array();
+    $tableau['nom'] = $nom;
+    $tableau['email']=$email;
+    $tableau['idgenre']=$idGenre;
+    $tableau['mdp'] = $mdp;
+    $tableau['dateDeNaissance']=$dateNaissance;
+    $tableau['isAdmin']=false;
+		$this->db->insert('utilisateur', $tableau);
+	}
+
+  public function getInfoUtilisateur($idUtilisateur){
+    $sql="SELECT * FROM infoUtilisateur WHERE idUtilisateur=%d ORDER BY idinfoutilisateur DESC LIMIT 1";
+    $sql=sprintf($sql,$idUtilisateur);
+    $query=$this->db->query($sql);
+    $resultat=array();
+    foreach($query->result_array() as $row){
+        $resultat[]=$row;
+    }
+    return $resultat;
+  }
+>>>>>>> Stashed changes
 }
 
 /* End of file User_model.php */
