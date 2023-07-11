@@ -4,6 +4,7 @@
 //En dessous de la balise main qui contient le content
 
 ?>
+<link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>">
 
         <footer class="bg-light py-3">
             <div class="container text-center">

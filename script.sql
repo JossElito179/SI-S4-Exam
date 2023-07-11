@@ -49,11 +49,13 @@ create table trancheAge(
 	max double precision
 );
 
+-- CRUD
 create table categorie(
 	idCategorie serial primary key,
 	nomCategorie varchar(35)
 );
 
+-- CRUD
 create table sakafo(
 	idSakafo serial  primary key, 
 	nomSakafo varchar(35)
@@ -67,6 +69,7 @@ create table categorieSakafo(
 	foreign key(idSakafo) references sakafo(idSakafo)
 );
 
+-- CRUD
 create table regime(
 	idRegime serial primary key,
 	nomRegime varchar(35)	
@@ -77,6 +80,7 @@ create table journee(
 	nomJournee varchar(35)
 );
 
+-- CRUD
 create table regimeSakafo(
 	idRegimeSakafo serial primary key,
 	idRegime integer,

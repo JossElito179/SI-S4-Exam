@@ -54,13 +54,15 @@ class Login extends CI_Controller
 
 	public function authenticateAdmin()
 	{
-		$error['message']='Something went wrong with your email or password';
+		$error['message']='Verifiez que Vous etes vraiment un admin.';
 		$this->load->model('User_model','user',true);
 		$mail=$this->input->post('email');
 		$mdp=$this->input->post('password');
 		$isAdmin=$this->user->getForAuthAdmin($mail,$mdp);
 		if ($isAdmin==true) {
-			redirect('welcome_message');
+			$this->load->view('menuBackOffice');
+			$this->load->view('acceuilAdmin');
+			$this->load->view('footer');
 		}else {
 			$this->load->view('loginAdmin',$error);
 		}
