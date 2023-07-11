@@ -10,7 +10,7 @@
     <meta name="keywords" content="Colorlib Templates">
 
     <!-- Title Page-->
-    <title>Au Register Forms by Colorlib</title>
+    <title>BackOffice | Regime</title>
 
     <!-- Icons font CSS-->
     <link href="<?php echo base_url("assets/vendor/mdi-font/css/material-design-iconic-font.min.css"); ?> rel="stylesheet" media="all">
@@ -32,69 +32,72 @@
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title"> Ajout Regime </h2>
-                    <form method="POST">
+                    <?php if(isset($erreur)){
+                        echo "<label class='label' style=color:red;>".$erreur."</label>";
+                    }?>
+                    <form action="<?php echo site_url("Crud/insererRegime");?>"  method="POST">
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">first name</label>
-                                    <input class="input--style-4" type="text" name="first_name">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">last name</label>
-                                    <input class="input--style-4" type="text" name="last_name">
+                                    <label class="label">Nom Regime</label>
+                                    <input class="input--style-4" type="text" name="nomregime">
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Birthday</label>
-                                    <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="text" name="birthday">
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                        <?php foreach($categories as $categorie){?>
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Pourcentage de <?php echo $categorie->nomcategorie; ?></label>
+                                        <div class="input-group-icon">
+                                            <input class="input--style-4 js-datepicker" type="number" name="<?php echo $categorie->nomcategorie; ?>">
+                                            <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Gender</label>
-                                    <div class="p-t-10">
-                                        <label class="radio-container m-r-45">Male
-                                            <input type="radio" checked="checked" name="gender">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-container">Female
-                                            <input type="radio" name="gender">
-                                            <span class="checkmark"></span>
-                                        </label>
+                        </div>
+                        <?php } ?>
+                        <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label"> Tranche Poids</label>
+                                        <div class="input-group-icon">
+                                            <input class="input--style-4 js-datepicker" type="number" name="poidsactuelle">
+                                            <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                         <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Email</label>
-                                    <input class="input--style-4" type="email" name="email">
+                                <div class="col-2">
+                                    <div class="input-group"> Tranche Taille</label>
+                                        <div class="input-group-icon">
+                                            <input class="input--style-4 js-datepicker" type="number" name="tailleactuelle">
+                                            <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Phone Number</label>
-                                    <input class="input--style-4" type="text" name="phone">
-                                </div>
-                            </div>
                         </div>
+                        <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Poids A Atteindre</label>
+                                        <div class="input-group-icon">
+                                            <input class="input--style-4 js-datepicker" type="number" name="objectif">
+                                            <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
                         <div class="input-group">
-                            <label class="label">Subject</label>
+                            <label class="label">Objectif</label>
                             <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="subject">
-                                    <option disabled="disabled" selected="selected">Choose option</option>
-                                    <option>Subject 1</option>
-                                    <option>Subject 2</option>
-                                    <option>Subject 3</option>
+                                <select name="idobjectif">
+                                <option disabled="disabled" selected="selected">Choose option</option>
+                                <?php foreach($objectifs as $objectif){?>
+                                    <option value="<?php echo $objectif->idobjectif; ?></option>"><?php echo $objectif->option; ?></option>
+                                    <?php } ?>
                                 </select>
                                 <div class="select-dropdown"></div>
                             </div>

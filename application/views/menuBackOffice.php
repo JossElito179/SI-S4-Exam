@@ -3,12 +3,16 @@
     /* border: solid; */
     background-color: gray;
     padding: 30px;
-    width: 215px;
+    justify-content: center;
+    /* margin: 100px; */
+    /* width: 215px; */
     /* position: left; */
 }
 
 #conteneur div{
-    display: flex: block; 
+    width: 100px;
+    padding: 20px;
+    display: inline; 
     text-align: left;      
 }
 
@@ -23,21 +27,12 @@
 }
 
 </style>
-
+<center>
 <div id="conteneur">
-    <h4> MENU </h3>
-<div><a href>Ajout </a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
-<div><a href>Menu 1</a></div>
+<div><a href="<?php echo site_url('Crud/versAjoutAliment'); ?>">Ajout Aliment</a></div>
+<div><a href="<?php echo site_url('Crud/versListeAliment'); ?>">Mes Aliments</a></div>
+<div><a href="<?php echo site_url('Crud/versAjoutExercice'); ?>">Ajout Exercice</a></div>
+<div><a href="<?php echo site_url('Crud/versListeExercice'); ?>">Mes Exercices</a></div>
+<div><a href="<?php echo site_url('Crud/versAjoutRegime'); ?>">Ajout Regime</a></div>
 </div>
+</center>

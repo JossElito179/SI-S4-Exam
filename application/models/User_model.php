@@ -65,7 +65,7 @@ class User_model extends CI_Model {
 		$data = $user->result();
 
     if(count($data) == 1){
-      $this->session->set_userdata('usersession', $data[0]->id);
+      $this->session->set_userdata('usersession',$data[0]->id);
       return $data[0]->isadmin;
     }
     return false;
