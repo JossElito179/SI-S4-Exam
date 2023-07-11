@@ -28,7 +28,11 @@ class Tranche extends CI_Controller
 
   public function index()
   {
-    // 
+
+    $this->load->model('Categorie');
+        $data['liste']=$this->Categorie->randomAliment(4);
+        $this->load->view('Teste',$data); 
+
   }
 
 	public function getAllId()

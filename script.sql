@@ -85,10 +85,8 @@ create table regimeAliment(
 	pLegume double precision,
 	pFruit double precision,
 	pAccompagnement double precision,
-	idJournee integer,
 	jour integer,
 	foreign key(idRegime) references regime(idRegime),
-	foreign key(idJournee) references journee(idJournee)
 );
 
 create table tranchePoidsActuel(
@@ -169,6 +167,10 @@ create table regimePersonne(
 	foreign key(idRegime) references regime(idRegime),
 	foreign key(idUtilisateur) references utilisateur(id)
 );
+
+create view v_categorieAliment as select idcategoriealiment,idcategorie,categorieAliment.idaliment,prixkilo,aliment.nomAliment
+from categorieAliment 
+join aliment on categorieAliment.idaliment=aliment.idaliment;
 
 create table objectifSportive(
 	idObjectifSportive serial primary key,
@@ -285,16 +287,17 @@ insert into categorie values(default, 'accompagnement');
 
 -- Insertion de Categorie Aliment
 -- Fruit
-insert into categorieAliment values(default, 5, 1);
-insert into categorieAliment values(default, 5, 2);
-insert into categorieAliment values(default, 5, 3);
-insert into categorieAliment values(default, 5, 4);
-insert into categorieAliment values(default, 5, 5);
-insert into categorieAliment values(default, 5, 6);
-insert into categorieAliment values(default, 5, 7);
-insert into categorieAliment values(default, 5, 8);
-insert into categorieAliment values(default, 5, 9);
-insert into categorieAliment values(default, 5, 10);
+insert into categorieAliment values(default, 1, 1);
+insert into categorieAliment values(default, 1, 2);
+insert into categorieAliment values(default, 1, 3);
+insert into categorieAliment values(default, 1, 4);
+insert into categorieAliment values(default, 1, 5);
+insert into categorieAliment values(default, 1, 6);
+insert into categorieAliment values(default, 1, 7);
+insert into categorieAliment values(default, 1, 8);
+insert into categorieAliment values(default, 1, 9);
+insert into categorieAliment values(default, 1, 10);
+
 -- Legume
 insert into categorieAliment values(default, 2, 11);
 insert into categorieAliment values(default, 2, 12);
@@ -348,7 +351,6 @@ insert into regime values(default, 'Regime cetogene');
 insert into regime values(default, 'Regime Atkins');
 insert into regime values(default, 'Regime de jeuene intermittent');
 -- Augmentation de poids
-insert into regime values(default, 'Regime')
 
 insert into tranchePoids values (default,1,5),
 						(default,6,10),
@@ -362,31 +364,30 @@ insert into trancheTaille values (default,80,120),
 						 (default,121,170),
 						 (default,171,220);
 
+insert into regimeAliment values(default,1,1,40,20,10,20,10),
+								(default,1,2,30,30,10,20,10),
+								(default,1,3,50,20,10,10,10),
 
-insert into regimeAliment values(default,1,40,20,10,20,10,1),
-								(default,1,30,30,10,20,10,2),
-								(default,1,50,20,10,10,10,3),
-
-								(default,2,20,20,10,30,10,1),
-								(default,2,40,0,10,40,10,2),
-								(default,2,40,40,0,20,0,3),
-								(default,2,0,30,10,50,10,4),
+								(default,2,1,20,10,20,20,30),
+								(default,2,2,40,0,10,40,10),
+								(default,2,3,40,0,40,0,20),
+								(default,2,4,0,30,10,50,10),
 								
-								(default,3,10,0,10,70,10,1),
-								(default,3,20,20,0,40,10,2),
-								(default,3,0,20,20,60,0,3),
-								(default,3,20,20,10,30,20,4),
-								(default,3,10,0,10,50,30,5),
+								(default,3,1,0,10,10,70,10),
+								(default,3,2,20,20,0,40,10),
+								(default,3,3,20,20,60,0,0),
+								(default,3,4,20,20,10,30,20),
+								(default,3,5,10,0,10,50,30),
 								
-								(default,4,0,20,10,60,10,1),
-								(default,4,0,10,10,70,10,2),
-								(default,4,0,30,10,50,10,3),
+								(default,4,1,0,20,10,60,10),
+								(default,4,2,0,10,10,70,10),
+								(default,4,3,0,30,10,50,10),
 								
-								(default,7,10,10,40,40,0,1),
-								(default,7,10,0,40,50,0,2),
-								(default,7,10,20,10,60,0,3),
-								(default,7,10,0,10,50,0,4),
-								(default,7,0,10,60,30,0,5);
+								(default,5,1,1,10,40,40,0),
+								(default,5,2,0,0,40,50,0),
+								(default,5,10,0,20,10,60,0),
+								(default,5,4,40,0,10,50,0),
+								(default,5,5,0,10,60,30,0);
 
 insert into tranchePoidsActuel values (default,0,40),
 						(default,41,80),
