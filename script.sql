@@ -153,7 +153,6 @@ create table objectifSportive(
 	idObjectif integer,
 	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
 	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
-	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
 	foreign key(idTranchePoidsActuel) references tranchePoidsActuel(idTranchePoidsActuel),
 	foreign key(idActiviteSportive) references activite(id)
 ); 
@@ -181,7 +180,6 @@ create table objectifSportive(
 	idObjectif integer,
 	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
 	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
-	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
 	foreign key(idTranchePoidsActuel) references tranchePoidsActuel(idTranchePoidsActuel),
 	foreign key(idActiviteSportive) references activite(id)
 ); 
