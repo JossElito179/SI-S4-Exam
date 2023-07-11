@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  */
 
-class Tranche_model extends CI_Model {
+class Sport_model extends CI_Model {
 
   // ------------------------------------------------------------------------
 
@@ -34,22 +34,29 @@ class Tranche_model extends CI_Model {
     // 
   }
 
-	public function getIdTranchePoids($poids)
+	public function getActiviteByIds($taille,$poids,$poidsActuelle,$objectif)
 	{
-		$poids = $this->db->escape($poids);
-    $query = $this->db->query('SELECT idTranchePoids FROM TranchePoids WHERE '.$poids.' >= min AND '.$poids.'<= max;');
-		$result = $query->row();
+		$data=array(
+			'idTranchePoids'=>$poids,
+			'idTrancheTaille'=>$taille,
+			'idTranchePoidsActuel'=>$poidsActuelle,
+			'idObjectif'=>$objectif
+		);
+		$this->db->where($data);
+		$result=$this->db->get('objectifSpostive');
 		return $result;
 	}
 
-	public function getIdTrancheTaille($taille)
+	public function getActivitePerDay($taille,$poids,$poidsActuelle,$objectif)
 	{
-		$taille = $this->db->escape($taille);
-    $query = $this->db->query('SELECT idTrancheTaille FROM TrancheTaille WHERE '.$taille.' >= min AND '.$taille.'<= max;');
-		$result = $query->row();
+		$data=$this->getActiviteByIds($taille,$poids,$poidsActuelle,$objectif);
+		$querry1=sprintf('select * from v_sport where idActiviteSportive=%s',$data[0]->idActiviteSportive);
+		$this->db->select($querry1);
+		$result=$this->db->row();
 		return $result;
 	}
 
+	
   // ------------------------------------------------------------------------
 
 }
