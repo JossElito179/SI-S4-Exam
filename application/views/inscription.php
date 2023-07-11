@@ -9,33 +9,35 @@
 </head>
 <body>
     <div class="center">
-        <h1>Sign up</h1>
-        <form action="#">
+        <form action="<?php echo site_url('Insertion_User/insertUser'); ?>" method="post">
             <div class="txt_field">
-                <input type="text" name="" required>
+                <input type="text" name="nom" required>
                 <span></span>
                 <label>Nom :</label>
             </div>
             <div class="txt_field">
-                <input type="text" name="" required>
+                <input type="text" name="email" required>
                 <span></span>
                 <label>Email :</label>
             </div>
             <div class="txt_field">
-                <select name="" id="">
-                    <option value="">Homme</option>
-                    <option value="">Femme</option>
+                <select name="genre" id="">
+
+                    <?php
+                    foreach($genres as $genre){ ?>
+                    <option value="<?php echo $genre->idgenre; ?>"><?php echo $genre->genre; ?></option>
+                    <?php } ?> 
                 </select>
                 <span></span>
                 <label style="margin-top: 5px;">genre :</label>
             </div>
             <div class="txt_field">
-                <input type="date" required>
+                <input type="date" name="dateDeNaissance" required>
                 <span></span>
                 <label>date de naissance :</label>
             </div>
             <div class="txt_field">
-                <input type="password" name="" required>
+                <input type="password" name="mdp" required>
                 <span></span>
                 <label>Mot de passe :</label>
             </div>
