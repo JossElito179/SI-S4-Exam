@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Regime Donnee</title>
+
+  <title>Regime Alimentaire</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -39,47 +40,22 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Ananas 150g</td>
-            <td>Miel 50g</td>
-            <td>Poirreaux 140g</td>
-            <td>Riz 20g</td>
-            <td>Porc 30g</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Ananas 150g</td>
-            <td>Miel 50g</td>
-            <td>Poirreaux 140g</td>
-            <td>Riz 20g</td>
-            <td>Porc 30g</td>
+            <?php 
+            $i=0;
+            foreach($regimeAliment as $liste){ ?>
+            <tr>
+              <th scope="row"><?php echo $liste['jour']; ?></th>
+              <td><?php echo $randomListe[$i]['fruit'];  ?></td>
+              <td><?php echo $randomListe[$i]['legume']; ?></td>
+              <td><?php echo $randomListe[$i]['proteine']; ?></td>
+              <td><?php echo $randomListe[$i]['sucre']; ?></td>
+              <td><?php echo $randomListe[$i]['accompagnement']; ?></td>
             </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Ananas 150g</td>
-            <td>Miel 50g</td>
-            <td>Poirreaux 140g</td>
-            <td>Riz 20g</td>
-            <td>Porc 30g</td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>Ananas 150g</td>
-            <td>Miel 50g</td>
-            <td>Poirreaux 140g</td>
-            <td>Riz 20g</td>
-            <td>Porc 30g</td>         
-            </tr>
-          <tr>
-            <th scope="row">5</th>
-            <td>Ananas 150g</td>
-            <td>Miel 50g</td>
-            <td>Poirreaux 140g</td>
-            <td>Riz 20g</td>
-            <td>Porc 30g</td>
-          </tr>
-        </tbody>
+            <?php 
+            $i=$i+1;
+            } ?>
+          </tbody>
+
       </table>
       <!-- End Table with stripped rows -->
 

@@ -83,6 +83,18 @@ class User_model extends CI_Model {
     $tableau['isAdmin']=false;
 		$this->db->insert('utilisateur', $tableau);
 	}
+
+
+  public function getInfoUtilisateur($idUtilisateur){
+    $sql="SELECT * FROM infoUtilisateur WHERE idUtilisateur=%d ORDER BY idinfoutilisateur DESC LIMIT 1";
+    $sql=sprintf($sql,$idUtilisateur);
+    $query=$this->db->query($sql);
+    $resultat=array();
+    foreach($query->result_array() as $row){
+        $resultat[]=$row;
+    }
+    return $resultat;
+  }
 }
 
 /* End of file User_model.php */

@@ -1,0 +1,134 @@
+#main-table , .table-striped{
+    width:90% ;
+    margin-left: 5%;
+    margin-top: 5%;
+    font-family: "Poppins", sans-serif;
+}
+
+.card {
+    margin-bottom: 30px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    width: 50%;
+    background-image: linear-gradient(to right,rgb(255, 211, 211),rgb(149, 206, 245));
+    margin-left: 25%;
+		margin-top: 5%;
+	}
+  
+  .card-header,
+  .card-footer {
+    border-color: #ebeef4;
+    background-color: #fff;
+    color: #798eb3;
+    padding: 15px;
+  }
+  
+  .card-title {
+    padding: 20px 0 15px 0;
+    font-size: 18px;
+    font-weight: 500;
+    margin-left: 5%;
+    color: #012970;
+    font-family: "Poppins", sans-serif;
+    margin-left:23%;
+  }
+  
+  .card-title span {
+    color: #899bbd;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .card-body {
+    padding: 0 20px 20px 20px;
+  }
+
+  
+.dashboard .recent-sales .table thead {
+    background: #f6f6fe;
+  }
+  
+  .dashboard .recent-sales .table thead th {
+    border: 0;
+  }
+  
+  .dashboard .recent-sales .dataTable-top {
+    padding: 0 0 10px 0;
+  }
+  
+  .dashboard .recent-sales .dataTable-bottom {
+    padding: 10px 0 0 0;
+  }
+  
+  /* Top Selling */
+  .dashboard .top-selling {
+    font-size: 14px;
+  }
+  
+  .dashboard .top-selling .table thead {
+    background: #f6f6fe;
+  }
+  
+  .dashboard .top-selling .table thead th {
+    border: 0;
+  }
+  
+  .dashboard .top-selling .table tbody td {
+    vertical-align: middle;
+  }
+
+  .table-striped {
+    border-collapse: collapse;
+  }
+  
+  .table-striped th,
+  .table-striped td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .table-striped tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .titre{
+    background-color: #015f70;
+    color: #ebeef4;
+  }
+  .titre th{
+border: none;
+  }
+
+  input{
+    width: 20rem;
+    border: none;
+    box-shadow: 1px 1px 1px #899bbd;
+    height: 2rem;
+    background-color: rgb(248, 239, 226);
+    border-radius: 5px;
+}
+
+body{
+    font-family: "Poppins", sans-serif;
+}
+
+form {
+    margin-left:23%;
+    width:70%;
+}
+
+button{
+    margin-top: 10%;
+    width: 10rem;
+    border: none;
+    box-shadow: 1px 1px 1px #899bbd;
+    height: 2rem;
+    background-color: rgb(20, 0, 92);
+    border-radius: 5px;
+    color: #ddd;
+}
+
+p{
+    margin-bottom: -0em;
+}
