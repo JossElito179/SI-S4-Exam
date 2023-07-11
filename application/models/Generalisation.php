@@ -43,6 +43,20 @@ class Generalisation extends CI_Model {
         return $resultat;
     }
 
+    public function altertable($table, $nomcolonne, $type){
+        $sql = "ALTER TABLE ".$table." ADD COLUMN ".$nomcolonne." ".$type;
+
+        // Exécute la requête ALTER TABLE
+        $this->db->query($sql);
+    }
+
+    public function altertabledrop($table, $nomcolonne){
+        $sql = "ALTER TABLE ".$table." DROP COLUMN ".$nomcolonne;
+
+        // Exécute la requête ALTER TABLE
+        $this->db->query($sql);
+    }
+
     public function SelectSpecifiedFromTableSansEgale($NomTable, $colonnes, $conditions){
         $this->db->select($colonnes); // Select specific columns
         $this->db->from($NomTable); // Specify the table name

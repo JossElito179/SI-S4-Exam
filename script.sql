@@ -187,12 +187,56 @@ create table utilisateur(
 );
 
 
+<<<<<<< HEAD
 
 
 insert into genre values(default, 'Homme');
 insert into genre values(default, 'Femme');
 
 insert into utilisateur values(default, 'henintsoa', 'henintsoa@gmail.com', 1, 'henintsoa', current_date);
+=======
+create table code(
+	idCode serial primary key,
+	vola double precision,
+	code varchar(35),
+	etat integer
+);
+
+create table compteComptantAdmin(
+	idCompteComptantAdmin serial primary key,
+	montant double precision
+);
+
+create table compteComptantUtilisateur(
+	idCompteComptantUtilisateur serial primary key,
+	idUtilisateur integer,
+	montant double precision,
+	foreign key(idUtilisateur) references utilisateur(id)
+);
+
+create table stockCode(
+	idStockCode serial primary key,
+	idCode integer,
+	idUtilisateur integer,
+	confirmation integer,
+	foreign key(idCode) references code(idCode),
+	foreign key(idUtilisateur) references utilisateur(id)
+);
+
+create view v_sport as select activite.nomactivite , objectifSportive.idActiviteSportive , exercice.nomExercice , exercice.partieTravailler 
+							   , activiteSportive.repetition , activiteSportive.frequence from objectifSportive join activite
+							   on objectifSportive.idActiviteSportive=activite.id join activiteSportive 
+							   on activiteSportive.Activite=activite.id join exercice on activiteSportive.idExercice=exercice.idExercice;
+
+
+insert into utilisateur values(default, 'henintsoa', 'henintsoa@gmail.com', 1, 'henintsoa', current_date, true);
+
+
+insert into genre values(default, 'Homme');
+insert into genre values(default, 'Femme');
+
+insert into utilisateur values(default, 'henintsoa', 'henintsoa@gmail.com', 1, 'henintsoa', current_date, true);
+>>>>>>> 9c170202ec9137e690f2d7d27b730b35b9495c76
 
 
 
@@ -504,5 +548,8 @@ insert into objectifSportive values(default , 1 , 1 , 1, 1 , 1 ),
 								  (default , 3 , 3 , 1, 3 , 1 ),
 								  (default , 2 , 3 , 2, 3 , 1 ),
 								  (default , 2 , 3 , 3, 3 , 1 );
+
+
+INSERT INTO code(vola,code,etat) VALUES(1000,'14567809',0),(2000,'23412389',0);
 
 

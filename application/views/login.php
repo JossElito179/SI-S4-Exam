@@ -30,7 +30,7 @@
             </div>
             <input type="submit" value="Login">
             <div class="signup_link">
-                Already have an account? <a href="#">Sign in here.</a>
+                Already have an account? <a href="<?php echo site_url('Inscription'); ?>">Sign in here.</a>
             </div>
         </form>
     </div>

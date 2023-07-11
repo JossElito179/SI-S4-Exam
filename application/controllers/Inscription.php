@@ -27,6 +27,7 @@ class Inscription extends CI_Controller
   }
 
   public function index(){
-    $this->load->view('inscription');
+    $data['genres'] =  $this->Generalisation->SelectFromTable('genre');
+    $this->load->view('inscription', $data);
   }
 }
