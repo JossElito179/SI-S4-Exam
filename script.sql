@@ -119,6 +119,9 @@ create table typeSport(
 	nomType varchar(35)
 );
 
+insert into typeSport values (default,'individuel'),
+							 (default,'collectif');
+
 create table excercice(
 	idExercice serial primary key,
 	nomExercice varchar(35),
@@ -127,29 +130,34 @@ create table excercice(
 	foreign key(idType) references typeSport(idType)
 );
 
+create table activite(
+	id serial primary key,
+	nomactivite varchar(35)
+);
+
 create table activiteSportive(
 	idActiviteSportive serial primary key,
+	Activite integer,
 	idExercice integer,
 	repetition double precision,
 	frequence double precision,
-	foreign key(idExercice) references excercice(idExercice)
+	foreign key(idExercice) references excercice(idExercice),
+	foreign key(Activite) references activite(id)
 );
 
 
 create table objectifSportive(
 	idObjectifSportive serial primary key,
-	idRegime integer,
 	idActiviteSportive integer,
 	idTranchePoids integer,
 	idTranchetaille integer,
 	idTranchePoidsActuel integer,
-	idTrancheAge integer,
 	idObjectif integer,
 	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
 	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
 	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
 	foreign key(idTranchePoidsActuel) references tranchePoidsActuel(idTranchePoidsActuel),
-	foreign key(idActiviteSportive) references activiteSportive(idActiviteSportive)
+	foreign key(idActiviteSportive) references activite(id)
 ); 
 
 create table regimePersonne(
@@ -161,10 +169,6 @@ create table regimePersonne(
 	foreign key(idRegime) references regime(idRegime),
 	foreign key(idUtilisateur) references utilisateur(id)
 );
-
-create view v_regime as select regimeAliment.idRegime , regimeAliment.jour , categorie.nomCategorie , regimeAliment.pourcentage , journee.nomJournee 
-			from categorie join regimeAliment on categorie.idCategorie=regimeAliment.idCategorie join journee on 
-			journee.idJournee=regimeAliment.idJournee;
 
 insert into utilisateur values(default, 'henintsoa', 'henintsoa@gmail.com', 1, 'henintsoa', current_date);
 
@@ -374,9 +378,85 @@ insert into objectifRegime values (default , 1 , 1 , 1, 1 , 2 ),
 								  (default , 3 , 1 , 1, 1 , 1 ),
 								  (default , 3 , 1 , 2, 1 , 1 ),
 								  (default , 3 , 1 , 3, 1 , 1 ),
-								  (default , 7 , 2 , 1, 2 , 1 ),
-								  (default , 7 , 2 , 2, 2 , 1 ),
-								  (default , 7 , 2 , 3, 2 , 1 ),
+								  (default , 5 , 2 , 1, 2 , 1 ),
+								  (default , 5 , 2 , 2, 2 , 1 ),
+								  (default , 5 , 2 , 3, 2 , 1 ),
 								  (default , 4 , 3 , 1, 3 , 1 ),
 								  (default , 4 , 3 , 2, 3 , 1 ),
 								  (default , 4 , 3 , 3, 3 , 1 );
+
+INSERT INTO exercice (nomExercice, partieTravailler, idType)
+VALUES
+  ('Pompes', 'Bras, épaules et poitrine', 1),
+  ('Squats', 'Jambes et fessiers', 1),
+  ('Fentes', 'Jambes et fessiers', 1),
+  ('Planche', 'Abdominaux, dos et épaules', 1),
+  ('Burpees', 'Cardiovasculaire', 1),
+  ('Crunchs', 'Abdominaux', 1),
+  ('Mountain climbers', 'Abdominaux et cardio', 1),
+  ('Jumping jacks', 'Cardiovasculaire', 1),
+  ('Extensions de triceps', 'Triceps', 1),
+  ('Russian twists', 'Abdominaux et obliques', 1),
+  ('Lunges', 'Jambes et fessiers', 1),
+  ('Superman', 'Dos', 1),
+  ('Mountain climbers', 'Abdominaux et cardio', 1),
+  ('Gainage latéral', 'Abdominaux et obliques', 1),
+  ('Extensions de mollets', 'Mollets', 1),
+  ('Fentes latérales', 'Jambes et fessiers', 1),
+  ('Ponts de hanche', 'Fessiers et ischio-jambiers', 1),
+  ('Élévations latérales', 'Épaules', 1),
+  ('Extensions lombaires', 'Bas du dos', 1),
+  ('Sauts à la corde', 'Cardiovasculaire', 1);
+
+INSERT INTO exercice (nomExercice, partieTravailler, idType)
+VALUES
+  ('Football', 'Jambes, cardiovasculaire', 2),
+  ('Basketball', 'Jambes, bras, cardiovasculaire', 2),
+  ('Volleyball', 'Bras, jambes, cardiovasculaire', 2),
+  ('Handball', 'Bras, jambes, cardiovasculaire', 2),
+  ('Rugby', 'Bras, jambes, cardiovasculaire', 2),
+  ('Tennis', 'Bras, jambes, cardiovasculaire', 2),
+  ('Badminton', 'Bras, jambes, cardiovasculaire', 2);
+
+insert into activite values(default,'Activite de Gain musculaire'),
+					 (default,'Activite perte de graice'),
+					 (default,'Activite perte ittermitent'),
+					 (default,'Activite de gain poids');
+
+
+insert into activiteSportive values (default,1,21,'un apres midi','2 fois dans une semaine',30),
+									(default,1,22,'un matin au reveil','1 fois dans une semaine',30),
+									(default,1,1,'3 seance x 12','2 fois dans une semaine',10),
+									(default,1,3,'3 seance x 10 ','3 fois dans une semaine',30),
+									(default,1,3,'3 seance x 30 ','4 fois dans une semaine',30),
+									
+									(default,2,26,'le matin','2 fois dans une semaine',20),
+									(default,2,12,'2 seance x 5','3 fois dans une semaine',30),
+									(default,2,13,'5 seance x 2','2 fois dans une semaine',10),
+									
+									(default,3,14,'4 seance x 3','2 fois dans une semaine',30),
+									(default,3,22,'un apres midi','2 fois dans une semaine',90),
+									
+									(default,4,23,'entre le repas','2 fois dans une semaine',45),
+									(default,4,8,'4 seances x 20','2 fois dans une semaine',15),
+									(default,4,1,'un apres midi','2 fois dans une semaine',30);
+
+insert into objectifSportive values (default , 1 , 1 , 1, 1 , 2 ),
+								  (default , 1 , 1 , 2, 1 , 2 ),
+								  (default , 1 , 1 , 3, 1 , 2 ),
+								  (default , 4 , 2 , 1, 2 , 2 ),
+								  (default , 1 , 2 , 2, 2 , 2 ),
+								  (default , 1 , 2 , 3, 2 , 2 ),
+								  (default , 4 , 3 , 1, 3 , 2 ),
+								  (default , 1 , 3 , 2, 3 , 2 ),
+								  (default , 4 , 3 , 3, 3 , 2 ),
+
+								  (default , 3 , 1 , 1, 1 , 1 ),
+								  (default , 3 , 1 , 2, 1 , 1 ),
+								  (default , 3 , 1 , 3, 1 , 1 ),
+								  (default , 2 , 2 , 1, 2 , 1 ),
+								  (default , 2 , 2 , 2, 2 , 1 ),
+								  (default , 2 , 2 , 3, 2 , 1 ),
+								  (default , 3 , 3 , 1, 3 , 1 ),
+								  (default , 2 , 3 , 2, 3 , 1 ),
+								  (default , 2 , 3 , 3, 3 , 1 );
