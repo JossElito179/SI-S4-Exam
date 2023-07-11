@@ -35,11 +35,12 @@ class Insertion_User extends CI_Controller
 	{
 		$nom=$this->input->post('nom');
 		$email=$this->input->post('email');
-		$idGenre=$this->input->post('idGenre');
+		$idGenre=$this->input->post('genre');
 		$mdp=$this->input->post('mdp');
 		$dateNaissance=$this->input->post('dateDeNaissance');
 		$this->load->model('User_model','user',true);
 		$this->user->Insert($nom,$email,$idGenre,$mdp,$dateNaissance);
+		$this->load->view('login');
 	}
 }
 

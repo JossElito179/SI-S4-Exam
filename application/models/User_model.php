@@ -79,8 +79,8 @@ class User_model extends CI_Model {
     $tableau['email']=$email;
     $tableau['idgenre']=$idGenre;
     $tableau['mdp'] = $mdp;
-    $tableau['dateDeNaissance']=$dateNaissance;
-    $tableau['isAdmin']=false;
+    $tableau['datedenaissance']=$dateNaissance;
+    $tableau['isadmin']=false;
 		$this->db->insert('utilisateur', $tableau);
 	}
 
