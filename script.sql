@@ -57,6 +57,7 @@ create table categorieAliment(
 	idCategorieAliment serial primary key,
 	idCategorie integer,
 	idAliment integer,
+	prixKilo decimal(10,2),
 	foreign key(idCategorie) references categorie(idCategorie),
 	foreign key(idAliment) references Aliment(idAliment)
 );
@@ -64,6 +65,11 @@ create table categorieAliment(
 create table regime(
 	idRegime serial primary key,
 	nomRegime varchar(35)	
+);
+
+create table poidsParPersonne(
+	idPoidsParPersonne serial primary key,
+	PoidsEnGramme double precision
 );
 
 create table journee(
@@ -74,15 +80,22 @@ create table journee(
 create table regimeAliment(
 	idRegimeAliment serial primary key,
 	idRegime integer,
-	idCategorie integer,
-	pourcentage double precision,
+	pProteine double precision,
+	pSucre double precision,
+	pLegume double precision,
+	pFruit double precision,
+	pAccompagnement double precision,
 	idJournee integer,
 	jour integer,
 	foreign key(idRegime) references regime(idRegime),
-	foreign key(idCategorie) references categorie(idCategorie),
 	foreign key(idJournee) references journee(idJournee)
 );
 
+create table tranchePoidsActuel(
+	idTranchePoidsActuel serial primary key,
+	min double precision,
+	max double precision
+);
 --jour delimite le dernier jour du regime
 
 create table objectifRegime(
@@ -90,10 +103,12 @@ create table objectifRegime(
 	idRegime integer,
 	idTranchePoids integer,
 	idTranchetaille integer,
+	idTranchePoidsActuel integer,
 	idObjectif integer,
 	foreign key(idRegime) references regime(idRegime),
 	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
 	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
+	foreign key(idTranchePoidsActuel) references tranchePoidsActuel(idTranchePoidsActuel),
 	foreign key(idObjectif) references objectif(idObjectif)
 ); 
 
@@ -127,11 +142,13 @@ create table objectifSportive(
 	idActiviteSportive integer,
 	idTranchePoids integer,
 	idTranchetaille integer,
+	idTranchePoidsActuel integer,
 	idTrancheAge integer,
 	idObjectif integer,
 	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
 	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
 	foreign key(idTrancheAge) references trancheAge(idTrancheAge),
+	foreign key(idTranchePoidsActuel) references tranchePoidsActuel(idTranchePoidsActuel),
 	foreign key(idActiviteSportive) references activiteSportive(idActiviteSportive)
 ); 
 
@@ -306,90 +323,60 @@ insert into tranchePoids values (default,1,5),
 						(default,6,10),
 						(default,6,20);
 
+insert into tranchePoidsActuel values (default,0,40),
+						(default,41,80),
+						(default,80,200);
+
 insert into trancheTaille values (default,80,120),
 						 (default,121,170),
 						 (default,171,220);
 
 
-insert into regimeAliment values(default,1,3,40,1,3),
-						 (default,1,2,30,1,3),
-						 (default,1,5,30,1,3),
-						 (default,1,4,0,1,3),
-						 (default,1,1,0,1,3),
-						 
-						 (default,1,3,25,1,4),
-						 (default,1,2,25,1,4),
-						 (default,1,4,25,1,4),
-						 (default,1,1,25,1,4),
-						 (default,1,5,0,1,4),
+insert into regimeAliment values(default,1,40,20,10,20,10,1),
+								(default,1,30,30,10,20,10,2),
+								(default,1,50,20,10,10,10,3),
 
-						 (default,1,3,20,1,2),
-						 (default,1,2,20,1,2),
-						 (default,1,4,20,1,2),
-						 (default,1,1,20,1,2),
-						 (default,1,5,20,1,2),
+								(default,2,20,20,10,30,10,1),
+								(default,2,40,0,10,40,10,2),
+								(default,2,40,40,0,20,0,3),
+								(default,2,0,30,10,50,10,4),
+								
+								(default,3,10,0,10,70,10,1),
+								(default,3,20,20,0,40,10,2),
+								(default,3,0,20,20,60,0,3),
+								(default,3,20,20,10,30,20,4),
+								(default,3,10,0,10,50,30,5),
+								
+								(default,4,0,20,10,60,10,1),
+								(default,4,0,10,10,70,10,2),
+								(default,4,0,30,10,50,10,3),
+								
+								(default,7,10,10,40,40,0,1),
+								(default,7,10,0,40,50,0,2),
+								(default,7,10,20,10,60,0,3),
+								(default,7,10,0,10,50,0,4),
+								(default,7,0,10,60,30,0,5);
 
-						 (default,2,3,25,1,15),
-						 (default,2,2,25,1,15),
-						 (default,2,4,25,1,15),
-						 (default,2,1,25,1,15),
-						 (default,2,5,0,1,15),
+insert into tranchePoidsActuel values (default,0,40),
+						(default,41,80),
+						(default,80,200);
 
-						 (default,2,3,25,1,30),
-						 (default,2,2,25,1,30),
-						 (default,2,4,25,1,30),
-						 (default,2,1,15,1,30),
-						 (default,2,5,10,1,30),
+insert into objectifRegime values (default , 1 , 1 , 1, 1 , 2 ),
+								  (default , 1 , 1 , 2, 1 , 2 ),
+								  (default , 1 , 1 , 3, 1 , 2 ),
+								  (default , 2 , 2 , 1, 2 , 2 ),
+								  (default , 2 , 2 , 2, 2 , 2 ),
+								  (default , 2 , 2 , 3, 2 , 2 ),
+								  (default , 4 , 3 , 1, 3 , 2 ),
+								  (default , 4 , 3 , 2, 3 , 2 ),
+								  (default , 4 , 3 , 3, 3 , 2 ),
 
-						 (default,3,3,25,1,30),
-						 (default,3,2,10,1,30),
-						 (default,3,4,35,1,30),
-						 (default,3,1,25,1,30),
-						 (default,3,5,0,1,30),
-
-						 (default,4,3,0,1,7),
-						 (default,4,2,25,1,7),
-						 (default,4,4,25,1,7),
-						 (default,4,1,25,1,7),
-						 (default,4,5,25,1,7);
-
-
-insert into regime values(default, 'Regime hypocalorique');
-insert into regime values(default, 'Regime faible en glucides');
-insert into regime values(default, 'Regime mediterraneen modifie pour la perte de poids');
-insert into regime values(default, 'Regime vegetarien ou vegetarien pour la perte de poids');
-insert into regime values(default, 'Regime cetogene');
-insert into regime values(default, 'Regime Atkins');
-insert into regime values(default, 'Regime de jeuene intermittent');
-
-create table objectifRegime(
-	idObjectifRegime serial primary key,
-	idRegime integer,
-	idTranchePoids integer,
-	idTranchetaille integer,
-	idObjectif integer,
-	foreign key(idRegime) references regime(idRegime),
-	foreign key(idTranchePoids) references tranchePoids(idTranchePoids),
-	foreign key(idTrancheTaille) references trancheTaille(idTranchetaille),
-	foreign key(idObjectif) references objectif(idObjectif)
-); 
-
-insert into objectifRegime values (default , 1 , 1 , 1 , 2 ),
-								  (default , 1 , 1 , 2 , 2 ),
-								  (default , 1 , 1 , 3 , 2 ),
-								  (default , 4 , 2 , 1 , 2 ),
-								  (default , 4 , 2 , 2 , 2 ),
-								  (default , 2 , 2 , 3 , 2 ),
-								  (default , 1 , 3 , 1 , 2 ),
-								  (default , 4 , 3 , 2 , 2 ),
-								  (default , 1 , 3 , 3 , 2 ),
-
-								  (default , 1 , 1 , 1 , 1 ),
-								  (default , 2 , 1 , 2 , 1 ),
-								  (default , 3 , 1 , 3 , 1 ),
-								  (default , 1 , 2 , 1 , 1 ),
-								  (default , 1 , 2 , 2 , 1 ),
-								  (default , 2 , 2 , 3 , 1 ),
-								  (default , 3 , 3 , 1 , 1 ),
-								  (default , 2 , 3 , 2 , 1 ),
-								  (default , 3 , 3 , 3 , 1 );
+								  (default , 3 , 1 , 1, 1 , 1 ),
+								  (default , 3 , 1 , 2, 1 , 1 ),
+								  (default , 3 , 1 , 3, 1 , 1 ),
+								  (default , 7 , 2 , 1, 2 , 1 ),
+								  (default , 7 , 2 , 2, 2 , 1 ),
+								  (default , 7 , 2 , 3, 2 , 1 ),
+								  (default , 4 , 3 , 1, 3 , 1 ),
+								  (default , 4 , 3 , 2, 3 , 1 ),
+								  (default , 4 , 3 , 3, 3 , 1 );
