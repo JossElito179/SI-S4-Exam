@@ -94,7 +94,7 @@ create table tranchePoidsActuel(
 	min double precision,
 	max double precision
 );
---jour delimite le dernier jour du regime
+
 
 create table objectifRegime(
 	idObjectifRegime serial primary key,
@@ -120,7 +120,7 @@ create table typeSport(
 insert into typeSport values (default,'individuel'),
 							 (default,'collectif');
 
-create table excercice(
+create table Exercice(
 	idExercice serial primary key,
 	nomExercice varchar(35),
 	partieTravailler varchar(35),
@@ -137,9 +137,9 @@ create table activiteSportive(
 	idActiviteSportive serial primary key,
 	Activite integer,
 	idExercice integer,
-	repetition double precision,
-	frequence double precision,
-	foreign key(idExercice) references excercice(idExercice),
+	repetition varchar(35),
+	frequence varchar(35),
+	foreign key(idExercice) references Exercice(idExercice),
 	foreign key(Activite) references activite(id)
 );
 
@@ -171,6 +171,7 @@ create view v_categorieAliment as select idcategoriealiment,idcategorie,categori
 from categorieAliment 
 join aliment on categorieAliment.idaliment=aliment.idaliment;
 
+
 create table objectifSportive(
 	idObjectifSportive serial primary key,
 	idActiviteSportive integer,
@@ -194,6 +195,10 @@ create table activiteSportive(
 	foreign key(Activite) references activite(id)
 );
 
+create view v_sport as select activite.nomactivite , objectifSportive.idActiviteSportive , Exercice.nomExercice , Exercice.partieTravailler 
+							   , activiteSportive.repetition , activiteSportive.frequence from objectifSportive join activite
+							   on objectifSportive.idActiviteSportive=activite.id join activiteSportive 
+							   on activiteSportive.Activite=activite.id join Exercice on activiteSportive.idExercice=Exercice.idExercice;
 
 create table code(
 	idCode serial primary key,
@@ -231,18 +236,18 @@ create view v_sport as select activite.nomactivite , objectifSportive.idActivite
 
 insert into utilisateur values(default, 'henintsoa', 'henintsoa@gmail.com', 1, 'henintsoa', current_date, true);
 
--- Insertion de Genre
+
 insert into genre values(default, 'Homme');
 insert into genre values(default, 'Femme');
 
+insert into utilisateur values(default, 'henintsoa', 'henintsoa@gmail.com', 1, 'henintsoa', current_date, true);
 
--- Insertion d'Objectif
+
+
 insert into objectif values(default, 'Diminuer');
 insert into objectif values(default, 'Augmenter');
 
 
--- Insertion de Aliment
--- Fruit
 insert into Aliment values(default, 'Poire');
 insert into Aliment values(default, 'Litchis');
 insert into Aliment values(default, 'Pibasy');
@@ -255,7 +260,7 @@ insert into Aliment values(default, 'Peche');
 insert into Aliment values(default, 'Goaiave');
 
 
--- Legume
+
 insert into Aliment values(default, 'Carotte');
 insert into Aliment values(default, 'Cocombre');
 insert into Aliment values(default, 'Tomate');
@@ -268,7 +273,7 @@ insert into Aliment values(default, 'Brocoli');
 insert into Aliment values(default, 'Epinard');
 
 
--- Accompagnement
+
 insert into Aliment values(default, 'Patates Douces');
 insert into Aliment values(default, 'Lentille');
 insert into Aliment values(default, 'riz');
@@ -279,7 +284,7 @@ insert into Aliment values(default, 'Mais');
 insert into Aliment values(default, 'Yaourt');
 
 
--- Proteine
+
 insert into Aliment values(default, 'Poulet');
 insert into Aliment values(default, 'Steak');
 insert into Aliment values(default, 'Saumon');
@@ -292,7 +297,6 @@ insert into Aliment values(default, 'Chevre');
 insert into Aliment values(default, 'Mouton');
 
 
--- Sucre
 insert into Aliment values(default, 'Miel');
 insert into Aliment values(default, 'Gateau');
 insert into Aliment values(default, 'Biscuit');
@@ -305,15 +309,14 @@ insert into Aliment values(default, 'Creme glace');
 insert into Aliment values(default, 'Crepes sucree');
 
 
--- Insertion de Categorie
+
 insert into categorie values(default, 'fruit');
 insert into categorie values(default, 'legume');
 insert into categorie values(default, 'proteine');
 insert into categorie values(default, 'sucre');
 insert into categorie values(default, 'accompagnement');
 
--- Insertion de Categorie Aliment
--- Fruit
+
 insert into categorieAliment values(default, 1, 1);
 insert into categorieAliment values(default, 1, 2);
 insert into categorieAliment values(default, 1, 3);
@@ -325,7 +328,7 @@ insert into categorieAliment values(default, 1, 8);
 insert into categorieAliment values(default, 1, 9);
 insert into categorieAliment values(default, 1, 10);
 
--- Legume
+
 insert into categorieAliment values(default, 2, 11);
 insert into categorieAliment values(default, 2, 12);
 insert into categorieAliment values(default, 2, 13);
@@ -336,7 +339,8 @@ insert into categorieAliment values(default, 2, 17);
 insert into categorieAliment values(default, 2, 18);
 insert into categorieAliment values(default, 2, 19);
 insert into categorieAliment values(default, 2, 20);
--- Accompagnement
+
+
 insert into categorieAliment values(default, 3, 21);
 insert into categorieAliment values(default, 3, 22);
 insert into categorieAliment values(default, 3, 23);
@@ -345,7 +349,8 @@ insert into categorieAliment values(default, 3, 25);
 insert into categorieAliment values(default, 3, 26);
 insert into categorieAliment values(default, 3, 27);
 insert into categorieAliment values(default, 3, 28);
--- Proteine
+
+
 insert into categorieAliment values(default, 4, 29);
 insert into categorieAliment values(default, 4, 30);
 insert into categorieAliment values(default, 4, 31);
@@ -356,7 +361,8 @@ insert into categorieAliment values(default, 4, 35);
 insert into categorieAliment values(default, 4, 36);
 insert into categorieAliment values(default, 4, 37);
 insert into categorieAliment values(default, 4, 38);
--- Sucre
+
+
 insert into categorieAliment values(default, 5, 39);
 insert into categorieAliment values(default, 5, 40);
 insert into categorieAliment values(default, 5, 41);
@@ -368,8 +374,7 @@ insert into categorieAliment values(default, 5, 46);
 insert into categorieAliment values(default, 5, 47);
 insert into categorieAliment values(default, 5, 48);
 
--- Regime (Combinaison Aliment ho ana Regime Iray)
--- Perte de poids
+
 insert into regime values(default, 'Regime hypocalorique');
 insert into regime values(default, 'Regime faible en glucides');
 insert into regime values(default, 'Regime mediterraneen modifie pour la perte de poids');
@@ -377,7 +382,8 @@ insert into regime values(default, 'Regime vegetarien ou vegetarien pour la pert
 insert into regime values(default, 'Regime cetogene');
 insert into regime values(default, 'Regime Atkins');
 insert into regime values(default, 'Regime de jeuene intermittent');
--- Augmentation de poids
+
+
 
 insert into tranchePoids values (default,1,5),
 						(default,6,10),
@@ -450,9 +456,9 @@ insert into objectifRegime values (default , 1 , 1 , 1, 1 , 2 ),
 								  (default , 4 , 3 , 2, 3 , 1 ),
 								  (default , 4 , 3 , 3, 3 , 1 );
 
-INSERT INTO exercice (nomExercice, partieTravailler, idType)
+INSERT INTO Exercice (nomExercice, partieTravailler, idType)
 VALUES
-  ('Pompes', 'Bras, épaules et poitrine', 1),
+  ('Pompes', 'Bras, epaules et poitrine', 1),
   ('Squats', 'Jambes et fessiers', 1),
   ('Fentes', 'Jambes et fessiers', 1),
   ('Planche', 'Abdominaux, dos et épaules', 1),
@@ -469,11 +475,11 @@ VALUES
   ('Extensions de mollets', 'Mollets', 1),
   ('Fentes latérales', 'Jambes et fessiers', 1),
   ('Ponts de hanche', 'Fessiers et ischio-jambiers', 1),
-  ('Élévations latérales', 'Épaules', 1),
+  ('Elevations latérales', 'Epaules', 1),
   ('Extensions lombaires', 'Bas du dos', 1),
   ('Sauts à la corde', 'Cardiovasculaire', 1);
 
-INSERT INTO exercice (nomExercice, partieTravailler, idType)
+INSERT INTO Exercice (nomExercice, partieTravailler, idType)
 VALUES
   ('Football', 'Jambes, cardiovasculaire', 2),
   ('Basketball', 'Jambes, bras, cardiovasculaire', 2),
@@ -489,22 +495,33 @@ insert into activite values(default,'Activite de Gain musculaire'),
 					 (default,'Activite de gain poids');
 
 
-insert into activiteSportive values (default,1,21,'un apres midi','2 fois dans une semaine',30),
-									(default,1,22,'un matin au reveil','1 fois dans une semaine',30),
-									(default,1,1,'3 seance x 12','2 fois dans une semaine',10),
-									(default,1,3,'3 seance x 10 ','3 fois dans une semaine',30),
-									(default,1,3,'3 seance x 30 ','4 fois dans une semaine',30),
+create table activiteSportive(
+	idActiviteSportive serial primary key,
+	Activite integer,
+	idExercice integer,
+	repetition varchar(35),
+	frequence varchar(3
+	foreign key(idExercice) references Exercice(idExercice),
+	foreign key(Activite) references activite(id)
+);
+
+
+insert into activiteSportive values (default,1,21,'un apres midi','2 fois dans une semaine'),
+									(default,1,22,'un matin au reveil','1 fois dans une semaine'),
+									(default,1,1,'3 seance x 12','2 fois dans une semaine'),
+									(default,1,3,'3 seance x 10 ','3 fois dans une semaine'),
+									(default,1,3,'3 seance x 30 ','4 fois dans une semaine'),
 									
-									(default,2,26,'le matin','2 fois dans une semaine',20),
-									(default,2,12,'2 seance x 5','3 fois dans une semaine',30),
-									(default,2,13,'5 seance x 2','2 fois dans une semaine',10),
+									(default,2,26,'le matin','2 fois dans une semaine'),
+									(default,2,12,'2 seance x 5','3 fois dans une semaine'),
+									(default,2,13,'5 seance x 2','2 fois dans une semaine'),
 									
-									(default,3,14,'4 seance x 3','2 fois dans une semaine',30),
-									(default,3,22,'un apres midi','2 fois dans une semaine',90),
+									(default,3,14,'4 seance x 3','2 fois dans une semaine'),
+									(default,3,22,'un apres midi','2 fois dans une semaine'),
 									
-									(default,4,23,'entre le repas','2 fois dans une semaine',45),
-									(default,4,8,'4 seances x 20','2 fois dans une semaine',15),
-									(default,4,1,'un apres midi','2 fois dans une semaine',30);
+									(default,4,23,'entre le repas','2 fois dans une semaine'),
+									(default,4,8,'4 seances x 20','2 fois dans une semaine'),
+									(default,4,1,'un apres midi','2 fois dans une semaine');
 
 insert into objectifSportive values(default , 1 , 1 , 1, 1 , 1 ),
 								  (default , 1 , 1 , 2, 1 , 1 ),
