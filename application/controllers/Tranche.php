@@ -37,11 +37,18 @@ class Tranche extends CI_Controller
 
 	public function getAllId()
 	{
-		$poids=$this->input->post('poids');
-		echo $poids;
-		$this->load->model('Tranche_model','tranche',true);
-		$result=$this->tranche->getIdTranchePoids($poids);
-		var_dump($result);
+		$poidsActuel=$this->input->post('poidsActuel');
+		$taille=$this->input->post('taille');
+		$poids=$this->input->post('poidsobjectif');
+		$date=$this->input->post('datedebut');
+
+		$Objectif=$this->input->post('objectif');
+		
+		echo $this->session->userdata('usersession');
+		$this->load->model('InfoUser_model','info',true);
+		
+		$this->info->Insert($Objectif,$poids,$taille,$poidsActuel,$date);
+		redirect('Regime');
 	}
 }
 

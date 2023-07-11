@@ -38,24 +38,28 @@ class prixJournalier_model extends CI_Model {
 	public function getPoidsPerMan()
 	{
     $query = $this->db->query('select poidsengramme from poidsparpersonne order by idpoidsparpersonne asc limit 1');
-		$result = $query->row();
-		return $result;
+	$r=$query->result();
+	return $r;
 	}
 	public function setDataPoids($dataPercentage)
 	{
 		$poidsparp=$this->getPoidsPerMan();
-		for ($i=0; $i <count($dataPercentage); $i++) { 
-			$this->dataPoids[$i]=($dataPercentage[$i]*$poidsparp)/100;
-		}
+		$this->dataPoids[0]= ($dataPercentage['fruit'] * $poidsparp[0]->poidsengramme )/100;
+		$this->dataPoids[1]= ($dataPercentage['sucre'] * $poidsparp[0]->poidsengramme )/100;
+		$this->dataPoids[2]= ($dataPercentage['legume'] * $poidsparp[0]->poidsengramme )/100;
+		$this->dataPoids[3]= ($dataPercentage['accompagnement'] * $poidsparp[0]->poidsengramme )/100;
+		$this->dataPoids[4]= ($dataPercentage['proteine'] * $poidsparp[0]->poidsengramme )/100;
 	}
 
 	public function setPrice($dataPercentage)
 	{
 		$this->setDataPoids($dataPercentage);
-		$categories=$this->getAllCategorie();
-		for ($i=0; $i < count($categories) ; $i++) { 
-			$this->prixParPoids=$this->prixParPoids+($this->dataPoids[$i]*$categories[$i]->prixKilo)/100;
+		$categories=$this->Generalisation->SelectFromTable('categorie');
+		for ($j=0; $j < count($this->dataPoids) ; $j++) {
+				$this->prixParPoids=$this->prixParPoids+($this->dataPoids[$j]* $categories[$j]->prixkilo )/100;
 		}
+		
+		return $this->prixParPoids;
 	}
 
 

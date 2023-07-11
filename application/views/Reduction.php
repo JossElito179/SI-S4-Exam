@@ -29,6 +29,7 @@
 
 			<?= form_open('Tranche/getAllId') ?>
 			<div class="col-12">
+					<input type="hidden" name="objectif" value="1">
           <p><label for="inputNanme4" class="form-label">Poids actuel en Kg</label></p>
           <input type="number" name="poidsActuel" class="form-control" id="inputNanme4">
         </div>
@@ -38,11 +39,11 @@
         </div>
         <div class="col-12">
         <p><label for="inputPassword4" class="form-label">Poids a reduire</label></p>
-          <input type="number" name="poids" class="form-control" id="inputPassword4">
+          <input type="number" name="poidsobjectif" class="form-control" id="inputPassword4">
         </div>
         <div class="col-12">
           <p><label for="inputAddress" class="form-label">Date de debut</label></p>
-          <input type="date" class="form-control" id="inputAddress" placeholder="1234 Main St">
+          <input type="date" name="datedebut" class="form-control" id="inputAddress" placeholder="1234 Main St">
         </div>
         <div class="text-center">
           <button type="submit" class="btn btn-primary">Valider</button>

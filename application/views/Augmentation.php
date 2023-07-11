@@ -25,10 +25,11 @@
 
 <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Pour l'augmentation de poids</h5>
+      <h5 class="card-title">Pour la reduction de poids</h5>
 
-      <form class="row g-3">
-        <div class="col-12">
+			<?= form_open('Tranche/getAllId') ?>
+			<div class="col-12">
+					<input type="hidden" name="objectif" value="2">
           <p><label for="inputNanme4" class="form-label">Poids actuel en Kg</label></p>
           <input type="number" name="poidsActuel" class="form-control" id="inputNanme4">
         </div>
@@ -37,18 +38,18 @@
           <input type="number" name="taille" class="form-control" id="inputEmail4">
         </div>
         <div class="col-12">
-        <p><label for="inputPassword4" class="form-label">Poids a gagner</label></p>
-          <input type="number" class="form-control" id="inputPassword4">
+        <p><label for="inputPassword4" class="form-label">Poids a reduire</label></p>
+          <input type="number" name="poidsobjectif" class="form-control" id="inputPassword4">
         </div>
         <div class="col-12">
           <p><label for="inputAddress" class="form-label">Date de debut</label></p>
-          <input type="date" class="form-control" id="inputAddress" placeholder="1234 Main St">
+          <input type="date" name="datedebut" class="form-control" id="inputAddress" placeholder="1234 Main St">
         </div>
         <div class="text-center">
           <button type="submit" class="btn btn-primary">Valider</button>
         </div>
         <p></p>
-      </form><!-- Vertical Form -->
+      <?= form_close() ?>
 
     </div>
   </div>

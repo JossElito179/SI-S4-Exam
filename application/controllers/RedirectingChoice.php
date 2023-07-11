@@ -33,9 +33,9 @@ class RedirectingChoice extends CI_Controller
 	public function redirectObjectif(){
 		$idObjectif=$this->input->post('idObjectif');
 		if ($idObjectif==1) {
-			$this->load->view('infoUserReduction',$idObjectif);
+			$this->load->view('Reduction',$idObjectif);
 		}elseif ($idObjectif==2) {
-			$this->load->view('infoUserAugmentation',$idObjectif);
+			$this->load->view('Augmentation',$idObjectif);
 		}
 	}
 

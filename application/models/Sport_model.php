@@ -50,7 +50,7 @@ class Sport_model extends CI_Model {
 	public function getActivitePerDay($taille,$poids,$poidsActuelle,$objectif)
 	{
 		$data=$this->getActiviteByIds($taille,$poids,$poidsActuelle,$objectif);
-		$querry1=sprintf('select * from v_sport where idActiviteSportive=%s',$data[0]->idActiviteSportive);
+		$querry1=sprintf('select distinct( v_sport.idactivitesportive),nomactivite,nomexercice,partietravailler,repetition ,frequence from v_sport where idActiviteSportive=%s',$data[0]->idActiviteSportive);
 		$this->db->select($querry1);
 		$result=$this->db->row();
 		return $result;

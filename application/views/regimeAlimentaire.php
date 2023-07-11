@@ -37,6 +37,7 @@
             <th scope="col">Legume</th>
             <th scope="col">Accompagnement</th>
             <th scope="col">Proteine</th>
+						<th scope="col">Prix</th>
           </tr>
         </thead>
         <tbody>
@@ -50,6 +51,7 @@
               <td><?php echo $randomListe[$i]['proteine']; ?></td>
               <td><?php echo $randomListe[$i]['sucre']; ?></td>
               <td><?php echo $randomListe[$i]['accompagnement']; ?></td>
+							<td><?php echo $prix[$i]; ?></td>
             </tr>
             <?php 
             $i=$i+1;

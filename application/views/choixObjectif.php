@@ -40,19 +40,25 @@ a:hover{
         <img src="<?php echo base_url("assets/images/images.jpg"); ?>">
     </div>
     <hr>
+	<?= form_open('RedirectingChoice/redirectObjectif')?>
     <div class="txt_field">
         <p>Je veux reduire mon poids</p>
-        <a href=""><button>Reduire</button></a>
+		<input type="hidden" name="idObjectif" value="1">
+		<button type="submit" >Reduire</button>
     </div>
+	<?= form_close()?>
 </div>
 <div class="center" id="objectif">
     <div class="txt_field">
         <img src="<?php echo base_url("assets/images/images.jpg"); ?>">
     </div>
     <hr>
+	<?= form_open('RedirectingChoice/redirectObjectif') ?>
     <div class="txt_field">
         <p>Je veux augmenter mon poids</p>
-        <a href=""><button>Augmenter</button></a>
+		<input type="hidden" name="idObjectif" value="2">
+		<button type="submit" >Augmenter</button>
     </div>
+	<?= form_close() ?>
 </div>
 </center>

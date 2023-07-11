@@ -33,15 +33,19 @@ class Regime extends CI_Controller
       $this->load->model('ObjectifRegime_model');
       $this->load->model('Regime_model');
       $this->load->model('Categorie');
+			$this->load->model('prixJournalier_model','prixCalc',true);
+
 
       $idUtilisateur=$this->session->userdata('usersession');
       $infoUtilisateur=$this->User_model->getInfoUtilisateur($idUtilisateur);
-      $tranchePoids=$this->Tranche->getTranchePoids($infoUtilisateur[0]['poidsobjectif']);
+      $tranchePoids=$this->Tranche->getTranchePoids($infoUtilisateur[0]['poidobjectif']);
       $trancheTaille=$this->Tranche->getTranchetaille($infoUtilisateur[0]['taille']);
       $tranchePoidsActuelle=$this->Tranche->getTranchePoidsActuelle($infoUtilisateur[0]['poidsactuelle']);
       $objectifRegime=$this->ObjectifRegime_model->getObjectifRegime($tranchePoids[0]['idtranchepoids'],$trancheTaille[0]['idtranchetaille'],$tranchePoidsActuelle[0]['idtranchepoidsactuel'],$infoUtilisateur[0]['idobjectif']);
-      $regimeAliment=$this->Regime_model->getRegimeAlimentByIdRegime($objectifRegime[0]['idregime']);
-      $data['regimeAliment']=$regimeAliment;
+      
+			$regimeAliment=$this->Regime_model->getRegimeAlimentByIdRegime($objectifRegime[0]['idregime']);
+      
+			$data['regimeAliment']=$regimeAliment;
       $randomListe=array();
       $i=0;
       foreach($regimeAliment as $liste){
@@ -52,18 +56,29 @@ class Regime extends CI_Controller
           $randomListe[$i]['accompagnement']=$this->Categorie->randomAliment(5)['nomaliment'];
           $i=$i+1;
       }
+
+			$dataPourcentage=$this->assignPoids($regimeAliment);
+
+			for ($i=0; $i <count($dataPourcentage) ; $i++) { 
+				$prix[$i]=$this->prixCalc->setPrice($dataPourcentage[$i]);
+			}
+
       $data['randomListe']=$randomListe;
-      $this->load->view('regimeAlimentaire',$data); 
+      $data['prix']=$prix;
+			$this->load->view('regimeAlimentaire',$data); 
   }
 
-  public function testfonctionget(){
-	 var_dump($this->Tranches->avoirLaTranche("tranchepoids", 1));
-  } 
-
-  public function testInsertionInfo(){
-    var_dump($this->InfoUtilisateur->verificationDesChamps("15", "15", "15", "1", "2023-08-11"));
-  }
-
+	public function assignPoids($regimeAlimentList)
+	{
+		for ($i=0; $i <count($regimeAlimentList) ; $i++) { 
+				$data[$i]['proteine']=$regimeAlimentList[$i]['pproteine'];
+				$data[$i]['fruit']=$regimeAlimentList[$i]['pfruit'];
+				$data[$i]['sucre']=$regimeAlimentList[$i]['plegume'];
+				$data[$i]['accompagnement']=$regimeAlimentList[$i]['paccompagnement'];
+				$data[$i]['legume']=$regimeAlimentList[$i]['plegume'];
+		}
+		return $data;
+	}
 }
 
 
